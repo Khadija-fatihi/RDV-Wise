@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notification Center - RDV Wise</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Fonts: Manrope & Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed": "#00174b",
+                    "tertiary-fixed": "#c9e6ff",
+                    "surface": "#f7f9fb",
+                    "secondary-fixed": "#89f5e7",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-tertiary-fixed": "#001e2f",
+                    "tertiary": "#005a82",
+                    "surface-tint": "#0053db",
+                    "outline-variant": "#c3c6d7",
+                    "on-surface": "#191c1e",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-error": "#ffffff",
+                    "secondary": "#006a61",
+                    "on-secondary-container": "#006f66",
+                    "surface-container": "#eceef0",
+                    "secondary-fixed-dim": "#6bd8cb",
+                    "surface-variant": "#e0e3e5",
+                    "on-secondary-fixed": "#00201d",
+                    "on-background": "#191c1e",
+                    "inverse-primary": "#b4c5ff",
+                    "surface-container-low": "#f2f4f6",
+                    "on-surface-variant": "#434655",
+                    "on-secondary-fixed-variant": "#005049",
+                    "on-tertiary-container": "#e4f2ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#004ac6",
+                    "tertiary-fixed-dim": "#89ceff",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#004c6e",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "primary-container": "#2563eb",
+                    "surface-dim": "#d8dadc",
+                    "inverse-surface": "#2d3133",
+                    "secondary-container": "#86f2e4",
+                    "surface-bright": "#f7f9fb",
+                    "background": "#f7f9fb",
+                    "outline": "#737686",
+                    "on-primary-container": "#eeefff",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#0074a6",
+                    "error-container": "#ffdad6",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-container-high": "#e6e8ea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope", "sans-serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["Inter", "sans-serif"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen pb-20 md:pb-0">
+<!-- TopNavBar (JSON Managed) -->
+<header class="sticky top-0 z-50 flex justify-between items-center px-6 py-3 w-full bg-slate-50 border-b border-slate-200 shadow-sm">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-extrabold text-blue-600 tracking-tight">RDV Wise</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 font-medium hover:text-blue-500 transition-colors" href="#">Home</a>
+<a class="text-slate-600 font-medium hover:text-blue-500 transition-colors" href="#">Book</a>
+<a class="text-slate-600 font-medium hover:text-blue-500 transition-colors" href="#">My Visits</a>
+<a class="text-slate-600 font-medium hover:text-blue-500 transition-colors" href="#">Profile</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-blue-600 font-bold border-b-2 border-blue-600 transition-all">
+<span class="material-symbols-outlined" data-icon="notifications" style="font-variation-settings: 'FILL' 1;">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 text-slate-600 hover:text-blue-500 transition-colors">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 py-8 md:px-6">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Sidebar Filter -->
+<aside class="md:col-span-3 space-y-6">
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/30">
+<h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="filter_list">filter_list</span>
+                        Filters
+                    </h2>
+<ul class="space-y-2">
+<li>
+<button class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg bg-primary text-on-primary font-medium transition-all">
+<span class="flex items-center gap-3">
+<span class="material-symbols-outlined text-xl" data-icon="all_inclusive">all_inclusive</span>
+                                    All
+                                </span>
+<span class="text-xs bg-white/20 px-2 py-0.5 rounded-full">12</span>
+</button>
+</li>
+<li>
+<button class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all">
+<span class="flex items-center gap-3">
+<span class="material-symbols-outlined text-xl" data-icon="calendar_today">calendar_today</span>
+                                    Appointments
+                                </span>
+</button>
+</li>
+<li>
+<button class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all">
+<span class="flex items-center gap-3">
+<span class="material-symbols-outlined text-xl" data-icon="description">description</span>
+                                    Records
+                                </span>
+</button>
+</li>
+<li>
+<button class="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all">
+<span class="flex items-center gap-3">
+<span class="material-symbols-outlined text-xl" data-icon="security">security</span>
+                                    Security
+                                </span>
+</button>
+</li>
+</ul>
+</div>
+<!-- Support Card -->
+<div class="relative overflow-hidden bg-gradient-to-br from-primary to-tertiary p-6 rounded-xl text-white shadow-lg">
+<div class="relative z-10">
+<h3 class="font-bold text-lg leading-tight mb-2">Need help?</h3>
+<p class="text-white/80 text-sm mb-4">Our support team is available 24/7 for medical emergencies.</p>
+<button class="bg-white text-primary px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-50 transition-colors">Contact Support</button>
+</div>
+<span class="absolute -bottom-4 -right-4 material-symbols-outlined text-9xl opacity-10 pointer-events-none" data-icon="medical_services">medical_services</span>
+</div>
+</aside>
+<!-- Notification Feed -->
+<section class="md:col-span-9 space-y-6">
+<div class="flex items-center justify-between">
+<div>
+<h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">Notification Center</h1>
+<p class="text-on-surface-variant">Stay updated with your healthcare activities.</p>
+</div>
+<button class="text-primary font-semibold text-sm hover:underline">Mark all as read</button>
+</div>
+<div class="space-y-4">
+<!-- 1. Appointment Card -->
+<article class="group relative bg-surface-container-lowest p-5 rounded-xl shadow-sm border-l-4 border-l-primary border border-outline-variant/30 hover:shadow-md transition-all flex flex-col md:flex-row gap-5 items-start">
+<div class="p-3 rounded-xl bg-primary-fixed text-on-primary-fixed">
+<span class="material-symbols-outlined text-2xl" data-icon="event_available">event_available</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-lg text-on-surface">Appointment Confirmed</h3>
+<span class="text-xs text-on-surface-variant bg-surface-container px-2 py-1 rounded">2h ago</span>
+</div>
+<p class="text-on-surface-variant mb-4 leading-relaxed">
+                                Your visit with <span class="font-semibold text-on-surface">Dr. Sarah Johnson</span> at Central Health Clinic has been confirmed for Tuesday, Oct 24th at 10:30 AM.
+                            </p>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-primary text-on-primary rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity">View Details</button>
+<button class="px-4 py-2 border border-outline text-on-surface-variant rounded-lg text-sm font-semibold hover:bg-surface-container-high transition-colors">Add to Calendar</button>
+</div>
+</div>
+</article>
+<!-- 2. Records Card -->
+<article class="group relative bg-surface-container-lowest p-5 rounded-xl shadow-sm border-l-4 border-l-secondary border border-outline-variant/30 hover:shadow-md transition-all flex flex-col md:flex-row gap-5 items-start">
+<div class="p-3 rounded-xl bg-secondary-container text-on-secondary-container">
+<span class="material-symbols-outlined text-2xl" data-icon="folder_shared">folder_shared</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-lg text-on-surface">Medical Records Request</h3>
+<span class="text-xs text-on-surface-variant bg-surface-container px-2 py-1 rounded">5h ago</span>
+</div>
+<p class="text-on-surface-variant mb-4 leading-relaxed">
+<span class="font-semibold text-on-surface">Dr. Miller</span> has requested temporary access to your medical history for your upcoming consultation.
+                            </p>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-secondary text-on-secondary rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity">Approve Access</button>
+<button class="px-4 py-2 border border-outline text-on-surface-variant rounded-lg text-sm font-semibold hover:bg-surface-container-high transition-colors">Decline</button>
+</div>
+</div>
+</article>
+<!-- 3. Security Card -->
+<article class="group relative bg-surface-container-lowest p-5 rounded-xl shadow-sm border-l-4 border-l-error border border-outline-variant/30 hover:shadow-md transition-all flex flex-col md:flex-row gap-5 items-start">
+<div class="p-3 rounded-xl bg-error-container text-on-error-container">
+<span class="material-symbols-outlined text-2xl" data-icon="lock_reset">lock_reset</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-bold text-lg text-on-surface">New Login Detected</h3>
+<span class="text-xs text-on-surface-variant bg-surface-container px-2 py-1 rounded">Yesterday</span>
+</div>
+<p class="text-on-surface-variant mb-4 leading-relaxed">
+                                A new login was detected from <span class="font-semibold text-on-surface">Safari on MacOS (San Francisco, CA)</span>. If this wasn't you, please secure your account immediately.
+                            </p>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-error text-on-error rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity">This wasn't me</button>
+<button class="px-4 py-2 border border-outline text-on-surface-variant rounded-lg text-sm font-semibold hover:bg-surface-container-high transition-colors">View Login Activity</button>
+</div>
+</div>
+</article>
+<!-- Older Notification (Visual variety) -->
+<article class="group relative bg-surface-container-low/50 p-5 rounded-xl border border-outline-variant/20 flex gap-5 items-start opacity-75">
+<div class="p-3 rounded-xl bg-surface-container-highest text-on-surface-variant">
+<span class="material-symbols-outlined text-2xl" data-icon="lab_profile">lab_profile</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-semibold text-on-surface">Lab Results Ready</h3>
+<span class="text-xs text-on-surface-variant">2 days ago</span>
+</div>
+<p class="text-on-surface-variant text-sm">Your blood work results from October 15th are now available in the portal.</p>
+</div>
+</article>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (JSON Managed - Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe bg-white/80 backdrop-blur-md border-t border-slate-200 shadow-lg md:hidden">
+<a class="flex flex-col items-center justify-center text-slate-500 hover:bg-slate-100 px-3 py-1 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-[10px] font-inter font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 hover:bg-slate-100 px-3 py-1 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="text-[10px] font-inter font-medium">Book</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 hover:bg-slate-100 px-3 py-1 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="event_note">event_note</span>
+<span class="text-[10px] font-inter font-medium">Visits</span>
+</a>
+<a class="flex flex-col items-center justify-center text-blue-600 bg-blue-50 px-3 py-1 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-[10px] font-inter font-medium">Profile</span>
+</a>
+</nav>
+</body></html>
