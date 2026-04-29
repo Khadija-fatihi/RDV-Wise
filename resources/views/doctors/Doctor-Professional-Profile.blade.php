@@ -292,7 +292,7 @@
 </div>
 </div>
 <button class="w-full bg-primary-container text-on-primary-container py-4 rounded-xl font-bold shadow-md hover:opacity-90 active:scale-95 transition-all text-center">
-                            Book Consultation
+                            <a href="{{ route('consultation.workspace') }}" class="block w-full h-full">Book Consultation</a>
                         </button>
 <p class="text-[10px] text-center text-slate-400">Cancel for free up to 24 hours before the appointment.</p>
 </div>

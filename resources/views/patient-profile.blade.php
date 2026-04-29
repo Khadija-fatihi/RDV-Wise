@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="mb-8">
-    <h1 class="text-3xl font-extrabold tracking-tight text-on-surface">Patient Profile</h1>
+    <h1 class="text-3xl font-extrabold tracking-tight text-on-surface flex items-center gap-2"><span class="material-symbols-outlined text-primary">person</span> Patient Profile</h1>
     <p class="text-on-surface-variant mt-1">Manage your health data, account security, and app preferences.</p>
 </div>
 
@@ -38,7 +38,7 @@
         <div class="bg-white rounded-xl shadow-sm border border-outline-variant">
             <div class="p-6 border-b border-outline-variant flex justify-between items-center">
                 <h3 class="text-lg font-bold">Personal Information</h3>
-                <button class="text-primary font-bold text-sm">Save Changes</button>
+                <button class="text-primary font-bold text-sm inline-flex items-center gap-2"><span class="material-symbols-outlined text-base">save</span>Save Changes</button>
             </div>
             <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-1">
@@ -136,7 +136,8 @@
                    <form action="{{ route('logout') }}" method="POST">
             @csrf
             <button type="submit" class="flex items-center gap-2 bg-red-50 text-red-600 px-4 py-2 rounded-lg hover:bg-red-100 transition font-medium">
-                🚪 Logout
+                <span class="material-symbols-outlined">logout</span>
+                Logout
             </button>
         </form>
         </div>

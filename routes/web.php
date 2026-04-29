@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\PatientAuthController;
+use App\Http\Controllers\Auth\DoctorSignupController;
 use App\Http\Controllers\Auth\SignupController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminDoctorController;
 use App\Http\Controllers\Admin\AdminPatientController;
@@ -83,9 +85,9 @@ Route::middleware(['auth'])->group(function () {
         return view('patient-profile');
     })->name('profile');
 
-    Route::get('/notifications', function () {
-        return view('notifications.notifications-patient');
-    })->name('notifications');
+    Route::get('/notifications', [NotificationController::class, 'index'])
+        ->middleware('auth')
+        ->name('notifications');
 
     Route::get('/dashboard/patient', [HomeController::class, 'patientDashboard'])->name('patient.dashboard');
 
@@ -121,6 +123,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/doctor/schedule', function () {
         return view("doctor's-shedule");
     })->name('doctor.schedule');
+
+    Route::get('/consultation', function () {
+        return view('Consultation-Workspace');
+    })->name('consultation.workspace');
 
     Route::get('/notifications-doctor', function () {
         return view('notifications.notifications-doctor');
@@ -175,3 +181,15 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/appointments/{id}/reschedule', [AdminAppointmentController::class, 'reschedule'])->name('appointments.reschedule');
     Route::patch('/appointments/{id}/reschedule', [AdminAppointmentController::class, 'doReschedule'])->name('appointments.doReschedule');
 });
+Route::get('/signup-doctor', function () {
+    return view('auth.doctor-signup');
+})->middleware('guest')->name('auth.signup.doctor');
+
+Route::post('/signup-doctor', [DoctorSignupController::class, 'store'])->middleware('guest')->name('auth.signup.doctor.store');
+
+    // --- notification ---
+
+use App\Http\Controllers\NotificationController;
+
+Route::get('/notifications', [NotificationController::class, 'index'])
+    ->middleware('auth');

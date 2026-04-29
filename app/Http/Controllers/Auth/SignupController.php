@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-use App\Notifications\PatientRegistered;
+
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Patient;
+use App\Models\User;
+use App\Notifications\PatientRegistered;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
 
 class SignupController extends Controller
 {
@@ -18,116 +19,110 @@ class SignupController extends Controller
         Log::info('Signup attempt', $request->all());
 
         try {
-
-            // 🔒 EMAIL DOMAIN CHECK (IMPORTANT)
+            // 🔒 EMAIL DOMAIN CHECK
             if (!str_ends_with($request->email, '@berdai.ma')) {
                 return redirect()->back()
                     ->withInput()
-                    ->withErrors([
-                        'email' => 'Only @berdai.ma emails are allowed'
-                    ]);
+                    ->withErrors(['email' => 'Only @berdai.ma emails are allowed']);
             }
 
-            // validation
+            // ✅ Validation
             $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email',
-                'cin' => 'required|string',
-                'phone' => 'required|string',
-                'password' => 'required|string|min:6|confirmed',
+                'name'             => 'required|string|max:255',
+                'email'            => 'required|email|unique:users,email',
+                'cin'              => 'required|string',
+                'phone'            => 'required|string',
+                'password'         => 'required|string|min:6|confirmed',
             ]);
 
             Log::info('Validation passed', $validated);
 
-            // Check if CIN already exists
+            // ✅ Check if CIN already exists
             if (Patient::where('cin', $validated['cin'])->exists()) {
                 return redirect()->back()
                     ->withInput()
-                    ->withErrors([
-                        'cin' => 'This CIN is already registered'
-                    ]);
+                    ->withErrors(['cin' => 'This CIN is already registered']);
             }
 
             $user = null;
 
+            // ✅ Create user + patient in a transaction
             DB::transaction(function () use ($validated, &$user) {
-
-                // create user
                 $user = User::create([
-                    'name' => $validated['name'],
-                    'email' => $validated['email'],
+                    'name'     => $validated['name'],
+                    'email'    => $validated['email'],
                     'password' => Hash::make($validated['password']),
-                    'phone' => $validated['phone'],
-                    'role' => 'patient',
+                    'phone'    => $validated['phone'],
+                    'role'     => 'patient',
                 ]);
 
-                // create patient record
                 Patient::create([
                     'user_id' => $user->id,
-                    'cin' => $validated['cin'],
+                    'cin'     => $validated['cin'],
                 ]);
             });
 
-            if ($user) {
-                Log::info('User created successfully', [
-                    'user_id' => $user->id,
-                    'role' => $user->role
-                ]);
-$user->notify(new \App\Notifications\PatientRegistered());                // login user
-                Auth::login($user, true);
+            if (!$user) {
+                throw new \Exception('User creation failed silently.');
             }
 
-            // regenerate session
+            Log::info('User created successfully', [
+                'user_id' => $user->id,
+                'role'    => $user->role,
+            ]);
+
+            // ✅ Send notification (fixed class reference)
+            $user->notify(new PatientRegistered());
+
+            // ✅ Log in + regenerate session
+            Auth::login($user, true);
             $request->session()->regenerate();
 
-            Log::info('User logged in successfully');
+            Log::info('User logged in, redirecting to dashboard');
 
-            // redirect
+            // ✅ Redirect to dashboard (handles role-based redirect automatically)
             return redirect()
-                ->route('patient.dashboard')
+                ->route('dashboard')
                 ->with('success', 'Account created successfully!');
 
         } catch (\Exception $e) {
-
-            Log::error('Signup Error: ' . $e->getMessage(), [
-                'exception' => $e
-            ]);
+            Log::error('Signup Error: ' . $e->getMessage(), ['exception' => $e]);
 
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'Error creating account: ' . $e->getMessage());
         }
-        $request->validate([
-    'email' => [
-        'required',
-        'email',
-        'regex:/^[a-zA-Z0-9._%+-]+@berdai\.ma$/'
-    ],
-]);
     }
-    public function login(Request $request)
-{
-    $credentials = $request->only('email', 'password');
-    $request->session()->regenerate();
 
-    if (Auth::attempt($credentials)) {
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if (!Auth::attempt($credentials, $request->boolean('remember'))) {
+            return back()->withErrors([
+                'email' => 'Email ou mot de passe incorrect.',
+            ])->onlyInput('email');
+        }
+
         $user = Auth::user();
 
-        if ($user->role === 'patient') {
-            return redirect('/patient/dashboard');
+        // ✅ Check if account is active (if you use is_active)
+        if (isset($user->is_active) && !$user->is_active) {
+            Auth::logout();
+            return back()->withErrors(['email' => 'Compte désactivé.']);
         }
 
-        if ($user->role === 'doctor') {
-            return redirect('/doctor/dashboard');
-        }
+        // ✅ Regenerate AFTER successful auth (not before, like you had)
+        $request->session()->regenerate();
 
-        if ($user->role === 'admin') {
-            return redirect('/admin/dashboard');
-        }
+        Log::info('User logged in', ['user_id' => $user->id, 'role' => $user->role]);
+
+        // ✅ Use the /dashboard route which already handles role redirects
+        return redirect()->route('dashboard');
     }
-
-    return back()->withErrors([
-        'email' => 'Invalid credentials',
-    ]);
-}
 }

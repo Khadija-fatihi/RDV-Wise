@@ -18,14 +18,20 @@ class Appointment extends Model {
         'date_heure'     => 'datetime',
         'rappel_envoye'  => 'boolean',
     ];
-
-    public function patient() {
-        return $this->belongsTo(Patient::class);
+        public function doctor()
+    {
+        return $this->belongsTo(\App\Models\Doctor::class, 'medecin_id');
     }
 
-    public function medecin() {
-        return $this->belongsTo(Doctor::class);
+    public function patient()
+    {
+        return $this->belongsTo(\App\Models\Patient::class, 'patient_id');
     }
+
+
+
+
+    
 
     public function consultation() {
         return $this->hasOne(Consultation::class);

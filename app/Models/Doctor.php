@@ -4,18 +4,36 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Appointment;
 
 class Doctor extends Model
 {
     use HasFactory;
     
-    protected $table = 'medecins';
+        public function appointments()
+    {
+        return $this->hasMany(\App\Models\Appointment::class, 'medecin_id');
+    }
+
+    protected $table = 'doctors';
     
-    protected $fillable = [
-        'user_id', 'specialite', 'inpe', 'cabinet', 'bio',
-        'consultation_duree', 'tarif', 'jours_travail',
-        'heure_debut', 'heure_fin', 'accepte_nouveaux'
-    ];
+  protected $fillable = [
+    'user_id', 
+    'cin',        // ✅ add this
+    'verified',   // ✅ add this
+    'specialite', 
+    'inpe', 
+    'cabinet', 
+    'bio',
+    'phone',      // ✅ add this too
+    'consultation_duree', 
+    'tarif', 
+    'jours_travail',
+    'heure_debut', 
+    'heure_fin', 
+    'accepte_nouveaux'
+];
  
     protected $casts = [
         'jours_travail'    => 'array',
@@ -27,10 +45,15 @@ class Doctor extends Model
         return $this->belongsTo(User::class);
     }
  
-    public function appointments() {
-        return $this->hasMany(Appointment::class);
-    }
- 
+public function doctor()
+{
+    return $this->belongsTo(Doctor::class, 'medecin_id');
+}
+
+public function patient()
+{
+    return $this->belongsTo(Patient::class, 'patient_id');
+}
     public function consultations() {
         return $this->hasMany(Consultation::class);
     }

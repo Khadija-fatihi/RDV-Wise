@@ -31,6 +31,7 @@ class PatientRegistered extends Notification
     {
 return ['database'];    }
 
+
     /**
      * Get the database representation of the notification.
      *
