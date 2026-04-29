@@ -133,9 +133,12 @@
                 <h4 class="text-error font-bold text-sm">Deactivate Account</h4>
                 <p class="text-xs text-on-surface-variant">Temporarily disable your profile and data</p>
             </div>
-            <button class="px-4 py-2 border border-error text-error text-sm font-bold rounded-lg hover:bg-error hover:text-on-error transition-colors">
-                Deactivate
+                   <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="flex items-center gap-2 bg-red-50 text-red-600 px-4 py-2 rounded-lg hover:bg-red-100 transition font-medium">
+                🚪 Logout
             </button>
+        </form>
         </div>
     </div>
 </div>

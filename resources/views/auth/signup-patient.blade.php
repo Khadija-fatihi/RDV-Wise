@@ -153,7 +153,7 @@
                         <label class="block text-sm font-semibold text-on-surface-variant" for="email">Email Address</label>
                         <div class="relative">
                             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">mail</span>
-                            <input name="email" value="{{ old('email') }}" class="w-full pl-10 pr-4 py-3 bg-surface-bright border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all placeholder:text-outline/50" id="email" placeholder="john@example.com" type="email" required/>
+                            <input name="email" value="{{ old('email') }}" class="w-full pl-10 pr-4 py-3 bg-surface-bright border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all placeholder:text-outline/50" id="email" placeholder="patient@berdai.ma" type="email" required/>
                         </div>
                     </div>
 
@@ -177,6 +177,15 @@
                 </div>
 
                 <!-- Password -->
+                 @if ($errors->any())
+    <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
                 <div class="space-y-2">
                     <label class="block text-sm font-semibold text-on-surface-variant" for="password">Password</label>
                     <div class="relative">

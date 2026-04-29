@@ -4,13 +4,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\PatientAuthController;
 use App\Http\Controllers\Auth\SignupController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminDoctorController;
+use App\Http\Controllers\Admin\AdminPatientController;
+use App\Http\Controllers\Admin\AdminAppointmentController;
 
 /*
 |--------------------------------------------------------------------------
 | Public Routes
 |--------------------------------------------------------------------------
 */
-
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -20,43 +24,55 @@ Route::get('/', function () {
 | Auth Routes
 |--------------------------------------------------------------------------
 */
-
 Route::get('/login', function () {
     return view('auth.login');
-})->name('login');
+})->middleware('guest')->name('login');
 
-Route::post('/login', [PatientAuthController::class, 'login'])->name('login.post');
+Route::post('/login', [PatientAuthController::class, 'login'])->middleware('guest')->name('login.post');
 
 Route::get('/login/identify', function () {
     return view('auth.identify');
-})->name('auth.identify');
-
-Route::post('/login/identify', function () {
-    return redirect()->route('auth.identify');
-});
+})->middleware('guest')->name('auth.identify');
 
 Route::get('/auth/doctor', function () {
     return view('auth.doctor-login');
-})->name('auth.doctor');
+})->middleware('guest')->name('auth.doctor');
 
 Route::get('/signup-patient', function () {
     return view('auth.signup-patient');
-})->name('auth.signup.patient');
+})->middleware('guest')->name('auth.signup.patient');
 
-Route::post('/signup-patient', [SignupController::class, 'store'])->name('auth.signup.patient.store');
+Route::post('/signup-patient', [SignupController::class, 'store'])->middleware('guest')->name('auth.signup.patient.store');
 
 Route::post('/logout', [PatientAuthController::class, 'logout'])->name('logout');
 
 /*
 |--------------------------------------------------------------------------
-| Patient Routes (auth required)
+| Dashboard Redirect
 |--------------------------------------------------------------------------
 */
+Route::get('/dashboard', function () {
+    $user = auth()->user();
+    if ($user->isPatient()) {
+        return redirect()->route('patient.dashboard');
+    } elseif ($user->isMedecin()) {
+        return redirect()->route('doctor.dashboard');
+    } elseif ($user->isAdmin()) {
+        return redirect()->route('admin.statistics');
+    }
+    return redirect('/');
+})->middleware('auth')->name('dashboard');
 
+/*
+|--------------------------------------------------------------------------
+| Patient Routes
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/book', function () {
-        return view('Appointment.book');
+        $doctors = \App\Models\Doctor::with('user')->where('verified', true)->get();
+        return view('Appointment.book', compact('doctors'));
     })->name('book');
 
     Route::get('/visits', function () {
@@ -89,14 +105,15 @@ Route::middleware(['auth'])->group(function () {
         return view('Patient-Access-Response');
     })->name('access.response');
 
+    Route::resource('appointments', AppointmentController::class)
+        ->only(['index', 'create', 'store', 'show', 'destroy']);
 });
 
 /*
 |--------------------------------------------------------------------------
-| Doctor Routes (auth required)
+| Doctor Routes
 |--------------------------------------------------------------------------
 */
-
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard/doctor', [HomeController::class, 'doctorDashboard'])->name('doctor.dashboard');
@@ -116,101 +133,45 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/doctors/{id}', function () {
         return view('doctors.Doctor-Professional-Profile');
     })->name('doctor.profile');
-
 });
-// use App\Http\Controllers\Auth\PatientAuthController;
-// use App\Http\Controllers\DashboardController;
-// use App\Http\Controllers\HomeController;
-// use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\Api\AppointmentController;
-// use App\Http\Controllers\Auth\SignupController;
 
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
 
+    // Statistics Dashboard
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('statistics');
 
-// Route::get('/', function () {
-//     \Log::info('Home route accessed', [
-//         'is_authenticated' => auth()->check(),
-//         'user_id' => auth()->id(),
-//         'user_role' => auth()->check() ? auth()->user()->role : null,
-//     ]);
+    // Support page
+    Route::get('/support', function () {
+        return view('admin.Admin-support');
+    })->name('support');
 
-//     if (auth()->check()) {
-//         // User is logged in, redirect to their main page
-//         if (auth()->user()->isPatient()) {
-//             return redirect()->route('book');
-//         } elseif (auth()->user()->isDoctor()) {
-//             return redirect()->route('doctor.dashboard');
-//         }
-//         return redirect('/dashboard');
-//     }
-//     // User is not logged in, show welcome page
-   
-//     return view('welcome');
-// })->name('home');
+    // Admin Notifications
+    Route::get('/notifications', [AdminController::class, 'notifications'])->name('notifications');
 
-// Route::view('/login', 'auth.login')->name('login');
-// Route::post('/login', [PatientAuthController::class, 'login'])->name('login.post');
-// Route::post('/login/identify', function (Request $request) {
-//     return redirect()->route('auth.identify');
-// });
+    // --- Doctors ---
+    Route::get('/doctors', [AdminDoctorController::class, 'index'])->name('doctors');
+    Route::get('/doctors/create', [AdminDoctorController::class, 'create'])->name('doctors.create');
+    Route::post('/doctors', [AdminDoctorController::class, 'store'])->name('doctors.store');
+    Route::get('/doctors/{id}/edit', [AdminDoctorController::class, 'edit'])->name('doctors.edit');
+    Route::put('/doctors/{id}', [AdminDoctorController::class, 'update'])->name('doctors.update');
+    Route::delete('/doctors/{id}', [AdminDoctorController::class, 'destroy'])->name('doctors.destroy');
+    Route::patch('/doctors/{id}/verify', [AdminDoctorController::class, 'verify'])->name('doctors.verify');
 
-// Route::view('/login/identify', 'auth.identify')->name('auth.identify');
-// Route::post('/login/identify', function (Request $request) {
-//     return redirect()->route('auth.identify');
-// });
+    // --- Patients ---
+    Route::get('/patients', [AdminPatientController::class, 'index'])->name('patients');
+    Route::get('/patients/{id}', [AdminPatientController::class, 'show'])->name('patients.show');
+    Route::get('/patients/{id}/edit', [AdminPatientController::class, 'edit'])->name('patients.edit');
+    Route::put('/patients/{id}', [AdminPatientController::class, 'update'])->name('patients.update');
+    Route::delete('/patients/{id}', [AdminPatientController::class, 'destroy'])->name('patients.destroy');
 
-// Route::get('/signup-patient', function () {
-//     return view('auth.signup-patient');
-// })->name('auth.signup.patient');
-
-// Route::post('/signup-patient', [SignupController::class, 'store'])->name('auth.signup.patient.store');
-
-// Route::view('/auth/doctor', 'auth.doctor-login')->name('auth.doctor');
-
-// Route::middleware(['auth', 'role:patient'])->group(function () {
-//     Route::view('/book', 'Appointment.book')->name('book');
-//     Route::view('/visits', 'visits')->name('visits');
-//     Route::view('/profile', 'profile')->name('profile');
-//     Route::view('/notifications-patient', 'notifications.notifications-patient')->name('notifications-patient');
-
-//     Route::get('/dashboard/patient', [HomeController::class, 'patientDashboard'])
-//         ->name('patient.dashboard');
-// });
-
-// Route::middleware(['auth', 'role:medecin'])->group(function () {
-//     Route::get('/dashboard/doctor', [HomeController::class, 'doctorDashboard'])
-//         ->name('doctor.dashboard');
-//     Route::view('/notifications-doctor', 'notifications.notifications-doctor')->name('doctor.notifications');
-// });
-
-// Route::middleware('auth')->get('/notifications', function () {
-//     $user = auth()->user();
-
-//     if ($user->isMedecin()) {
-//         return redirect()->route('doctor.notifications');
-//     }
-
-//     if ($user->isPatient()) {
-//         return redirect()->route('notifications-patient');
-//     }
-
-//     abort(403);
-// })->name('notifications');
-
-// Route::middleware('auth')->group(function () {
-//     Route::resource('appointments', AppointmentController::class);
-// });
-
-// //     Route::get('/', function () {
-// //     if (!auth()->check()) {
-// //         return redirect()->route('patient.dashboard');
-// //     }
-
-// //     if (auth()->user()->role === 'doctor') {
-// //         return redirect()->route('doctor.dashboard');
-// //     }
-
-// //     return redirect()->route('patient.dashboard'); // patient
-// // });
-
+    // --- Appointments ---
+    Route::get('/appointments', [AdminAppointmentController::class, 'index'])->name('appointments');
+    Route::patch('/appointments/{id}/cancel', [AdminAppointmentController::class, 'cancel'])->name('appointments.cancel');
+    Route::get('/appointments/{id}/reschedule', [AdminAppointmentController::class, 'reschedule'])->name('appointments.reschedule');
+    Route::patch('/appointments/{id}/reschedule', [AdminAppointmentController::class, 'doReschedule'])->name('appointments.doReschedule');
+});

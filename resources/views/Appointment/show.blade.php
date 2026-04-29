@@ -40,31 +40,15 @@
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Type</p>
                         <p class="text-lg font-semibold text-gray-900 dark:text-white capitalize">
-                            {{ str_replace('-', ' ', $appointment->appointment_type) }}
+                            {{ str_replace('_', ' ', $appointment->type_seance) }}
                         </p>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Consultation Fee</p>
-                        <p class="text-lg font-semibold text-gray-900 dark:text-white">
-                            ${{ number_format($appointment->consultation_fee ?? 0, 2) }}
-                        </p>
-                    </div>
-
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Payment Status</p>
-                        <p class="badge {{ $appointment->is_paid ? 'badge-success' : 'badge-warning' }}">
-                            {{ $appointment->is_paid ? 'Paid' : 'Pending' }}
-                        </p>
-                    </div>
-                </div>
-
-                @if ($appointment->reason_for_visit)
+                @if ($appointment->motif)
                     <div>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Reason for Visit</p>
-                        <p class="text-gray-900 dark:text-gray-300 mt-1">{{ $appointment->reason_for_visit }}</p>
+                        <p class="text-gray-900 dark:text-gray-300 mt-1">{{ $appointment->motif }}</p>
                     </div>
                 @endif
 

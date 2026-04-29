@@ -69,3 +69,6 @@ Route::middleware('auth:sanctum')->group(function () {
          ->only(['index', 'store', 'show']);
     Route::patch('/appointments/{appointment}/cancel', [AppointmentController::class, 'cancel']);
 });
+Route::middleware('auth:sanctum')->get('/notifications', function () {
+    return auth()->user()->notifications;
+});

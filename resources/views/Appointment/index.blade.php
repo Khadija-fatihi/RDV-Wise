@@ -23,7 +23,6 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Date & Time</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Type</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Fee</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Actions</th>
                     </tr>
                 </thead>
@@ -48,9 +47,6 @@
                                     {{ ucfirst($appointment->status) }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">
-                                ${{ number_format($appointment->consultation_fee ?? 0, 2) }}
-                            </td>
                             <td class="px-6 py-4 text-sm space-x-2">
                                 <a href="{{ route('appointments.show', $appointment) }}" class="btn btn-sm btn-secondary">View</a>
                                 @if ($appointment->status !== 'completed' && $appointment->status !== 'cancelled')
@@ -66,7 +62,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-6 py-4 text-center text-gray-500">No appointments found</td>
+                            <td colspan="5" class="px-6 py-4 text-center text-gray-500">No appointments found</td>
                         </tr>
                     @endforelse
                 </tbody>

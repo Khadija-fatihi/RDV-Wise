@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Patient;
 use App\Models\Medecin;
 use App\Models\Appointment;
+use App\Models\Doctor;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -36,7 +37,7 @@ class DatabaseSeeder extends Seeder {
                 'role'  => 'medecin',
                 'email_verified_at' => now(),
             ]);
-            Medecin::create([
+            Doctor::create([
                 'user_id'    => $user->id,
                 'specialite' => $md['specialite'],
                 'cabinet'    => $md['cabinet'],
@@ -50,10 +51,10 @@ class DatabaseSeeder extends Seeder {
 
         // ── Patients ───────────────────────────────────────────
         $patientsData = [
-            ['name' => 'Mohamed Rachidi',  'cin' => 'AB123456', 'sexe' => 'masculin', 'type_dialyse' => 'hemodialyse'],
-            ['name' => 'Aicha Benmoussa',  'cin' => 'CD789012', 'sexe' => 'feminin',  'type_dialyse' => 'hemodialyse'],
-            ['name' => 'Youssef El Idrissi','cin'=> 'EF345678', 'sexe' => 'masculin', 'type_dialyse' => 'peritoneal'],
-            ['name' => 'Zineb Chakir',     'cin' => 'GH901234', 'sexe' => 'feminin',  'type_dialyse' => 'aucun'],
+            ['name' => 'Mohamed Rachidi',  'cin' => 'AB123456', 'sexe' => 'M', 'type_dialyse' => 'hemodialyse'],
+            ['name' => 'Aicha Benmoussa',  'cin' => 'CD789012', 'sexe' => 'F',  'type_dialyse' => 'hemodialyse'],
+            ['name' => 'Youssef El Idrissi','cin'=> 'EF345678', 'sexe' => 'M', 'type_dialyse' => 'dialyse_peritoneale'],
+            ['name' => 'Zineb Chakir',     'cin' => 'GH901234', 'sexe' => 'F',  'type_dialyse' => null],
         ];
 
         foreach ($patientsData as $i => $pd) {
@@ -77,7 +78,7 @@ class DatabaseSeeder extends Seeder {
 
         // ── Quelques RDV ──────────────────────────────────────
         $patients = Patient::all();
-        $medecins = Medecin::all();
+        $medecins = Doctor::all();
         $statuts  = ['en_attente', 'confirme', 'termine', 'annule'];
         $types    = ['dialyse', 'consultation', 'controle'];
 
@@ -98,4 +99,4 @@ class DatabaseSeeder extends Seeder {
         $this->command->info(' Médecin: medecin1@berdai.ma / password');
         $this->command->info(' Patient: patient1@berdai.ma / password');
     }
-}
+}   

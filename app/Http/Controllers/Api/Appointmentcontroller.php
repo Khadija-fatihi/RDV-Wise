@@ -22,7 +22,7 @@ class AppointmentController extends Controller
         
         if ($user->isPatient()) {
             $appointments = $user->patient->appointments()->with('doctor.user')->paginate(15);
-        } elseif ($user->isDoctor()) {
+        } elseif ($user->isMedecin()) {
             $appointments = $user->doctor->appointments()->with('patient.user')->paginate(15);
         } else {
             $appointments = Appointment::with('patient.user', 'doctor.user')->paginate(15);

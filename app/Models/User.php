@@ -11,6 +11,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+
+
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
@@ -50,9 +52,14 @@ class User extends Authenticatable
         return $this->hasOne(Patient::class);
     }
 
-    public function Doctor()
+    public function doctor()
     {
         return $this->hasOne(Doctor::class);
+    }
+
+    public function medecin()
+    {
+        return $this->doctor();
     }
 
     public function isAdmin()
@@ -60,15 +67,13 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
-    public function isDoctor()
+    public function isMedecin()
     {
-        return $this->roDoctorle === 'Doctor';
+        return in_array($this->role, ['doctor', 'medecin'], true);
     }
 
     public function isPatient()
     {
         return $this->role === 'patient';
     }
-    
-    
 }

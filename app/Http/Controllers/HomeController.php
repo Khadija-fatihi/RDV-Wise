@@ -16,9 +16,9 @@ public function patientDashboard()
 
     return view('dashboard.patient', [
         'totalAppointments' => $appointments->count(),
-        'upcomingAppointments' => $appointments->where('appointment_date', '>', now())->count(),
-        'completedAppointments' => $appointments->where('status', 'completed')->count(),
-        'todayAppointments' => $appointments->whereDate('appointment_date', today())->get(),
+        'upcomingAppointments' => $appointments->where('date_heure', '>', now())->count(),
+        'completedAppointments' => $appointments->where('statut', 'completed')->count(),
+        'todayAppointments' => $appointments->whereDate('date_heure', today())->get(),
         'notificationsCount' => 2
     ]);
 }
@@ -32,10 +32,10 @@ public function doctorDashboard()
 
     return view('dashboard.doctor', [
         'totalPatients' => $doctor->appointments()->distinct('patient_id')->count(),
-        'todayAppointmentsCount' => $appointments->whereDate('appointment_date', today())->count(),
-        'completedAppointments' => $appointments->where('status', 'completed')->count(),
-        'pendingAppointments' => $appointments->where('status', 'scheduled')->count(),
-        'todayAppointments' => $appointments->whereDate('appointment_date', today())->get(),
+        'todayAppointmentsCount' => $appointments->whereDate('date_heure', today())->count(),
+        'completedAppointments' => $appointments->where('statut', 'completed')->count(),
+        'pendingAppointments' => $appointments->where('statut', 'pending')->count(),
+        'todayAppointments' => $appointments->whereDate('date_heure', today())->get(),
         'notificationsCount' => 3
     ]);
 }

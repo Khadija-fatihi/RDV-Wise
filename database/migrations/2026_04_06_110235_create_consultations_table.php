@@ -4,33 +4,30 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
-    public function up(): void {
+return new class extends Migration
+{
+    public function up(): void
+    {
         Schema::create('consultations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('appointment_id')->constrained()->onDelete('cascade');
-            $table->foreignId('patient_id')->constrained('patients')->onDelete('cascade');
-            $table->foreignId('medecin_id')->constrained('medecins')->onDelete('cascade');
+            $table->foreignId('patient_id')->constrained('patients')->cascadeOnDelete();
+            $table->foreignId('medecin_id')->constrained('medecins')->cascadeOnDelete();
+            $table->foreignId('appointment_id')->nullable()->constrained('appointments')->nullOnDelete();
             $table->date('date');
             $table->text('diagnostic')->nullable();
-            $table->text('prescription')->nullable();
-            $table->text('observations')->nullable();
-            // Paramètres dialyse
-            $table->decimal('poids_avant', 5, 2)->nullable();
-            $table->decimal('poids_apres', 5, 2)->nullable();
-            $table->decimal('ultrafiltration', 5, 2)->nullable(); // litres retirés
-            $table->integer('tension_avant')->nullable();
-            $table->integer('tension_apres')->nullable();
-            $table->decimal('taux_uree', 5, 2)->nullable();
-            $table->decimal('creatinine', 5, 2)->nullable();
-            $table->integer('duree_seance')->nullable(); // minutes
-            $table->boolean('complications')->default(false);
-            $table->text('details_complications')->nullable();
+            $table->text('traitement')->nullable();
+            $table->text('notes')->nullable();
+            // Dialysis session data
+            $table->decimal('poids_avant', 5, 2)->nullable();   // weight before session
+            $table->decimal('poids_apres', 5, 2)->nullable();   // weight after session
+            $table->integer('duree_minutes')->nullable();        // session duration
+            $table->decimal('debit_sang', 5, 2)->nullable();    // blood flow rate
             $table->timestamps();
         });
     }
 
-    public function down(): void {
+    public function down(): void
+    {
         Schema::dropIfExists('consultations');
     }
 };

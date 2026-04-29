@@ -132,8 +132,17 @@
             @csrf
             <div class="space-y-2">
                 <label class="block text-sm font-medium text-on-surface ml-1">Email Address</label>
-                <input name="email" value="{{ old('email') }}" class="w-full px-4 py-3 bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/40 text-on-surface transition-all placeholder:text-outline/60" placeholder="name@example.com" type="email" required/>
+                <input name="email" value="{{ old('email') }}" class="w-full px-4 py-3 bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/40 text-on-surface transition-all placeholder:text-outline/60" placeholder="name@berdai.ma" type="email" required/>
             </div>
+            @if ($errors->any())
+    <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
             <div class="space-y-2">
                 <div class="flex justify-between items-center ml-1">
                     <label class="block text-sm font-medium text-on-surface">Password</label>

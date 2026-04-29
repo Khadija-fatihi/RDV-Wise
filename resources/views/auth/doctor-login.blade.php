@@ -121,7 +121,7 @@
 @csrf
 <div class="space-y-2">
 <label class="block text-sm font-bold text-on-surface ml-1">Email Address</label>
-<input class="w-full px-4 py-3 bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/40 text-on-surface transition-all placeholder:text-outline/60" placeholder="dr.smith@clinic.com" required="" type="email"/>
+<input name="email" class="w-full px-4 py-3 bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/40 text-on-surface transition-all placeholder:text-outline/60" placeholder="Doctor@berdai.ma" required="" type="email"/>
 </div>
 <div class="space-y-2">
 <label class="block text-sm font-bold text-on-surface ml-1">CIN (Identity Card Number)</label>
@@ -132,11 +132,20 @@
 <input class="w-full px-4 py-3 bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/40 text-on-surface transition-all placeholder:text-outline/60" placeholder="+1 (555) 000-0000" required="" type="tel"/>
 </div>
 <div class="space-y-2">
+    @if ($errors->any())
+    <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="flex justify-between items-center px-1">
 <label class="text-sm font-bold text-on-surface">Password</label>
 <a class="text-xs text-primary font-bold hover:underline" href="#">Forgot?</a>
 </div>
-<input class="w-full px-4 py-3 bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/40 text-on-surface transition-all placeholder:text-outline/60" placeholder="Enter your password" required="" type="password"/>
+<input name="password" class="w-full px-4 py-3 bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/40 text-on-surface transition-all placeholder:text-outline/60" placeholder="Enter your password" required="" type="password"/>
 </div>
 <!-- Professional Verification Section - Essential for access -->
 <div class="space-y-3 pt-2">
@@ -155,7 +164,7 @@
 </div>
 </div>
 <div class="flex items-center gap-3 px-1 py-2">
-<input class="h-4 w-4 rounded border-outline-variant text-primary focus:ring-primary/40" id="remember" type="checkbox"/>
+<input name="remember" class="h-4 w-4 rounded border-outline-variant text-primary focus:ring-primary/40" id="remember" type="checkbox"/>
 <label class="text-xs text-on-surface-variant font-medium" for="remember">
                         Remember me on this device
                     </label>
