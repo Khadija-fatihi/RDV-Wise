@@ -10,7 +10,7 @@
 </div>
 
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-    <!-- Left Column -->
+   
     <div class="lg:col-span-4 space-y-8">
         <div class="bg-white rounded-xl shadow-sm border border-outline-variant p-8 flex flex-col items-center text-center">
             <div class="relative group">
@@ -56,6 +56,10 @@
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Phone Number</label>
                     <input class="w-full bg-surface border-outline-variant rounded-lg p-3 focus:ring-primary focus:border-primary" type="tel" value="{{ auth()->user()->phone ?? '' }}"/>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Organisme</label>
+                    <input class="w-full bg-surface border-outline-variant rounded-lg p-3 focus:ring-primary focus:border-primary" type="text" value="{{ auth()->user()->patient->organisme ?? 'CNSS / AMO / CNOPS' }}"/>
                 </div>
             </div>
         </div>

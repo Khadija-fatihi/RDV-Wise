@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Patient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class AdminPatientController extends Controller
 {
@@ -33,6 +34,45 @@ class AdminPatientController extends Controller
             'criticalAlerts',
             'avgSessions'
         ));
+    }
+
+    public function export(Request $request)
+    {
+        $query = Patient::with('user');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->whereHas('user', function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                  ->orWhere('email', 'like', "%$search%");
+            })->orWhere('cin', 'like', "%$search%");
+        }
+
+        $patients = $query->latest()->get();
+
+        $csv = fopen('php://temp', 'w+');
+        fputcsv($csv, ['ID', 'Name', 'Email', 'CIN', 'Sex', 'Dialysis Type', 'Sessions/Week']);
+
+        foreach ($patients as $patient) {
+            fputcsv($csv, [
+                $patient->id,
+                $patient->user->name ?? '',
+                $patient->user->email ?? '',
+                $patient->cin ?? '',
+                $patient->sexe ?? '',
+                $patient->type_dialyse ?? '',
+                $patient->seances_par_semaine ?? '',
+            ]);
+        }
+
+        rewind($csv);
+        $content = stream_get_contents($csv);
+        fclose($csv);
+
+        return Response::make($content, 200, [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="patients-export.csv"',
+        ]);
     }
 
     public function show($id)

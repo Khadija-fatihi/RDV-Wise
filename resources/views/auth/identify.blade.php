@@ -118,14 +118,14 @@
                     <span class="material-symbols-outlined ml-1 text-sm">chevron_right</span>
 </div>
 </a>
-<a href="{{ route('auth.doctor') }}" class="group relative flex flex-col items-center p-8 bg-surface-container-lowest border-2 border-transparent hover:border-secondary transition-all duration-300 rounded-xl shadow-sm hover:shadow-xl active:scale-98">
+<a href="{{ route('login') }}" class="group relative flex flex-col items-center p-8 bg-surface-container-lowest border-2 border-transparent hover:border-secondary transition-all duration-300 rounded-xl shadow-sm hover:shadow-xl active:scale-98">
 <div class="w-24 h-24 mb-6 rounded-full bg-teal-50 flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-colors duration-300">
 <span class="material-symbols-outlined text-5xl">medical_services</span>
 </div>
 <h3 class="font-headline font-bold text-xl mb-2 text-on-surface">I am a Doctor</h3>
-<p class="font-body text-sm text-on-surface-variant text-center leading-relaxed">Manage your schedule, view patient histories, and streamline your practice.</p>
+<p class="font-body text-sm text-on-surface-variant text-center leading-relaxed">Doctor access is created by the admin team. Contact the admin to be invited and verified.</p>
 <div class="mt-6 flex items-center text-secondary font-semibold text-sm">
-                    Continue as Doctor
+                    Contact admin for doctor access
                     <span class="material-symbols-outlined ml-1 text-sm">chevron_right</span>
 </div>
 </a>

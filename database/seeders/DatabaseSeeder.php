@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Patient;
-use App\Models\Medecin;
 use App\Models\Appointment;
 use App\Models\Doctor;
 use Illuminate\Database\Seeder;

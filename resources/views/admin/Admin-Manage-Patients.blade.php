@@ -56,10 +56,10 @@
 
 <!-- Top Bar -->
 <header class="bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm flex items-center justify-between px-6 h-16 w-full z-40 sticky top-0 pl-[272px]">
-    <div class="relative w-full max-w-xl">
+    <form method="GET" action="{{ route('admin.patients') }}" id="patient-search-form" class="relative w-full max-w-xl">
         <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
-        <input class="w-full pl-10 pr-4 py-2 bg-slate-100 border-transparent rounded-lg text-sm focus:bg-white focus:ring-2 focus:ring-blue-500 transition-all outline-none" placeholder="Search patients by name, ID or record..." type="text"/>
-    </div>
+        <input name="search" value="{{ request('search') }}" class="w-full pl-10 pr-4 py-2 bg-slate-100 border-transparent rounded-lg text-sm focus:bg-white focus:ring-2 focus:ring-blue-500 transition-all outline-none" placeholder="Search patients by name, ID or record..." type="text"/>
+    </form>
     <div class="flex items-center space-x-4">
         <a href="{{ route('admin.notifications') }}" class="p-2 text-slate-500 hover:bg-slate-100 rounded-full transition-colors relative">
             <span class="material-symbols-outlined">notifications</span>
@@ -90,12 +90,12 @@
                 <p class="text-slate-500 mt-1">Manage and monitor records for {{ $totalPatients ?? 0 }} registered patients.</p>
             </div>
             <div class="flex gap-3">
-                <button class="px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-slate-50 transition-all shadow-sm">
+                <button type="submit" form="patient-search-form" class="px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-slate-50 transition-all shadow-sm">
                     <span class="material-symbols-outlined text-lg">filter_list</span> Filter List
                 </button>
-                <button class="px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-slate-50 transition-all shadow-sm">
+                <a href="{{ route('admin.patients.export', ['search' => request('search')]) }}" class="px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-slate-50 transition-all shadow-sm">
                     <span class="material-symbols-outlined text-lg">download</span> Export Data
-                </button>
+                </a>
             </div>
         </div>
 

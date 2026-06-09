@@ -99,7 +99,7 @@
                         <span class="material-symbols-outlined">calendar_month</span>
                     </div>
                     <div>
-                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Today</p>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total</p>
                         <p class="text-xl font-extrabold text-slate-900">{{ $todayCount ?? 0 }}</p>
                     </div>
                 </div>
@@ -116,39 +116,40 @@
         </div>
 
         <!-- Filter Bar -->
-        <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+        <form method="GET" action="{{ route('admin.appointments') }}" class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4 bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
             <div class="flex flex-col gap-1.5">
                 <label class="text-xs font-bold text-slate-500 px-1">Department</label>
-                <select class="w-full px-4 py-2.5 bg-slate-50 border-slate-200 rounded-lg text-sm focus:ring-blue-600/20">
-                    <option>All Departments</option>
-                    <option>Cardiology</option>
-                    <option>Nephrology</option>
-                    <option>Pediatrics</option>
+                <select name="department" class="w-full px-4 py-2.5 bg-slate-50 border-slate-200 rounded-lg text-sm focus:ring-blue-600/20">
+                    <option value="">All Departments</option>
+                    @foreach(($specialties ?? collect()) as $specialty)
+                        <option value="{{ $specialty }}" {{ request('department') == $specialty ? 'selected' : '' }}>{{ $specialty }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="flex flex-col gap-1.5">
                 <label class="text-xs font-bold text-slate-500 px-1">Status</label>
-                <select class="w-full px-4 py-2.5 bg-slate-50 border-slate-200 rounded-lg text-sm focus:ring-blue-600/20">
-                    <option>All Statuses</option>
-                    <option>Confirmed</option>
-                    <option>Completed</option>
-                    <option>Canceled</option>
+                <select name="status" class="w-full px-4 py-2.5 bg-slate-50 border-slate-200 rounded-lg text-sm focus:ring-blue-600/20">
+                    <option value="">All Statuses</option>
+                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                    <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Confirmed</option>
+                    <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Completed</option>
+                    <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                 </select>
             </div>
             <div class="flex flex-col gap-1.5">
                 <label class="text-xs font-bold text-slate-500 px-1">Doctor</label>
-                <input class="w-full px-4 py-2.5 bg-slate-50 border-slate-200 rounded-lg text-sm" placeholder="Filter by name..."/>
+                <input type="text" name="doctor" value="{{ request('doctor') }}" class="w-full px-4 py-2.5 bg-slate-50 border-slate-200 rounded-lg text-sm" placeholder="Filter by name..."/>
             </div>
             <div class="flex flex-col gap-1.5">
                 <label class="text-xs font-bold text-slate-500 px-1">Date</label>
-                <input type="date" class="w-full px-4 py-2.5 bg-slate-50 border-slate-200 rounded-lg text-sm"/>
+                <input type="date" name="date" value="{{ request('date') }}" class="w-full px-4 py-2.5 bg-slate-50 border-slate-200 rounded-lg text-sm"/>
             </div>
             <div class="flex items-end">
-                <button class="w-full bg-slate-900 text-white py-2.5 rounded-lg font-bold text-sm hover:bg-slate-800 transition-colors flex items-center justify-center gap-2">
+                <button type="submit" class="w-full bg-slate-900 text-white py-2.5 rounded-lg font-bold text-sm hover:bg-slate-800 transition-colors flex items-center justify-center gap-2">
                     <span class="material-symbols-outlined text-sm">tune</span> Apply Filters
                 </button>
             </div>
-        </div>
+        </form>
 
         <!-- Appointments Table -->
         <div class="bg-white rounded-2xl shadow-md border border-slate-100 overflow-hidden">

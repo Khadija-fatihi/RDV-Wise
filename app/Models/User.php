@@ -76,4 +76,31 @@ class User extends Authenticatable
     {
         return $this->role === 'patient';
     }
+
+    public function dashboardRoute(): string
+    {
+        if ($this->isPatient()) {
+            return route('patient.dashboard');
+        }
+
+        if ($this->isMedecin()) {
+            return route('doctor.dashboard');
+        }
+
+        if ($this->isAdmin()) {
+            return route('admin.statistics');
+        }
+
+        return route('home');
+    }
+
+    public function roleLabel(): string
+    {
+        return match ($this->role) {
+            'admin' => 'Admin',
+            'doctor', 'medecin' => 'Doctor',
+            'patient' => 'Patient',
+            default => 'User',
+        };
+    }
 }

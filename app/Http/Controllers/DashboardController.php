@@ -18,7 +18,7 @@ class DashboardController extends Controller
         } elseif ($user->isMedecin()) {
             $total = Appointment::where('medecin_id', $user->medecin->id)->count();
         }
-
+    
         return view('dashboard', compact('total'));
     }
 }

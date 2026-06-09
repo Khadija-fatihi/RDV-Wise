@@ -4,80 +4,11 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'RDV Wise')</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <title>@yield('title', 'Smarte Santé')</title>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "on-secondary": "#ffffff",
-              "on-primary-fixed": "#00174b",
-              "tertiary-fixed": "#c9e6ff",
-              "surface": "#f7f9fb",
-              "secondary-fixed": "#89f5e7",
-              "inverse-on-surface": "#eff1f3",
-              "on-tertiary-fixed": "#001e2f",
-              "tertiary": "#005a82",
-              "surface-tint": "#0053db",
-              "outline-variant": "#c3c6d7",
-              "on-surface": "#191c1e",
-              "surface-container-highest": "#e0e3e5",
-              "on-error": "#ffffff",
-              "secondary": "#006a61",
-              "on-secondary-container": "#006f66",
-              "surface-container": "#eceef0",
-              "secondary-fixed-dim": "#6bd8cb",
-              "surface-variant": "#e0e3e5",
-              "on-secondary-fixed": "#00201d",
-              "on-background": "#191c1e",
-              "inverse-primary": "#b4c5ff",
-              "surface-container-low": "#f2f4f6",
-              "on-surface-variant": "#434655",
-              "on-secondary-fixed-variant": "#005049",
-              "on-tertiary-container": "#e4f2ff",
-              "surface-container-lowest": "#ffffff",
-              "on-tertiary": "#ffffff",
-              "primary": "#004ac6",
-              "tertiary-fixed-dim": "#89ceff",
-              "on-primary": "#ffffff",
-              "on-tertiary-fixed-variant": "#004c6e",
-              "on-primary-fixed-variant": "#003ea8",
-              "primary-fixed-dim": "#b4c5ff",
-              "primary-container": "#2563eb",
-              "surface-dim": "#d8dadc",
-              "inverse-surface": "#2d3133",
-              "secondary-container": "#86f2e4",
-              "surface-bright": "#f7f9fb",
-              "background": "#f7f9fb",
-              "outline": "#737686",
-              "on-primary-container": "#eeefff",
-              "error": "#ba1a1a",
-              "tertiary-container": "#0074a6",
-              "error-container": "#ffdad6",
-              "on-error-container": "#93000a",
-              "primary-fixed": "#dbe1ff",
-              "surface-container-high": "#e6e8ea"
-            },
-            borderRadius: {
-              DEFAULT: "0.25rem",
-              lg: "0.5rem",
-              xl: "0.75rem",
-              full: "9999px"
-            },
-            fontFamily: {
-              headline: ["Manrope", "sans-serif"],
-              body: ["Inter", "sans-serif"],
-              label: ["Inter", "sans-serif"]
-            }
-          },
-        },
-      }
-    </script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
       .material-symbols-outlined {
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -89,7 +20,7 @@
 <body class="bg-surface text-on-surface min-h-screen pb-20 md:pb-0">
 <header class="sticky top-0 z-50 flex justify-between items-center px-6 py-3 w-full bg-slate-50 border-b border-slate-200 shadow-sm">
     <div class="flex items-center gap-8">
-        <span class="text-2xl font-extrabold text-blue-600 tracking-tight">RDV Wise</span>
+        <span class="text-2xl font-extrabold text-blue-600 tracking-tight">Smarte Santé</span>
         <nav class="hidden md:flex items-center gap-6">
             @auth
                 @if(auth()->user()->isMedecin())

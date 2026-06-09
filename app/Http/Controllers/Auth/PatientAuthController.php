@@ -28,18 +28,13 @@ class PatientAuthController extends Controller
             $request->session()->regenerate();
 
             $user = auth()->user();
+            if (!$user instanceof \App\Models\User) {
+                return redirect()->route('login')->withErrors(['email' => 'Unable to resolve your account role.']);
+            }
 
             Log::info('Login successful for user: ' . $user->email);
 
-            if ($user->isPatient()) {
-                return redirect()->route('patient.dashboard');
-            } elseif ($user->isMedecin()) {
-                return redirect()->route('doctor.dashboard');
-            } elseif ($user->isAdmin()) {
-                return redirect()->route('admin.statistics');
-            }
-
-            return redirect('/dashboard');
+            return redirect($user->dashboardRoute());
         }
 
         Log::warning('Login failed for email: ' . $request->email);

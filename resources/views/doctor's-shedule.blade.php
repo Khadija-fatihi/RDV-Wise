@@ -94,7 +94,7 @@ Today's Schedule
 <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-surface">
 </div>
 <div>
-<h3 class="text-lg font-bold font-headline leading-tight">Arthur youssef</h3>
+<h3 class="text-lg font-bold font-headline leading-tight">ismail jarchifi</h3>
 <div class="flex gap-2 mt-1">
 <span class="px-2 py-0.5 rounded-full bg-secondary/10 text-secondary text-[10px] font-bold uppercase tracking-tight">Follow-up</span>
 <span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant text-[10px] font-bold uppercase tracking-tight">Hypertension</span>

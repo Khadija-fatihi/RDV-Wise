@@ -11,8 +11,9 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id')->constrained('patients')->cascadeOnDelete();
-            $table->foreignId('medecin_id')->constrained('medecins')->cascadeOnDelete();
+            $table->foreignId('medecin_id')->constrained('doctors')->cascadeOnDelete();
             $table->dateTime('date_heure');
+            $table->integer('duree')->default(30);
             $table->enum('type_seance', [
                 'consultation',
                 'hemodialyse',
@@ -27,7 +28,9 @@ return new class extends Migration
                 'cancelled',
             ])->default('pending');
             $table->text('motif')->nullable();           // reason for visit
+            $table->text('notes_patient')->nullable();   // patient notes
             $table->text('notes_medecin')->nullable();   // doctor notes
+            $table->boolean('rappel_envoye')->default(false);
             $table->timestamps();
         });
     }

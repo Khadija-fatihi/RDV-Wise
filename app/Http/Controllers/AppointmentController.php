@@ -62,6 +62,22 @@ class AppointmentController extends Controller
         return view('Appointment.show', compact('appointment'));
     }
 
+    public function confirm($id)
+    {
+        $appointment = Appointment::findOrFail($id);
+        $appointment->update(['statut' => 'confirmed']);
+
+        return back()->with('success', 'Appointment confirmed!');
+    }
+
+    public function cancel($id)
+    {
+        $appointment = Appointment::findOrFail($id);
+        $appointment->update(['statut' => 'cancelled']);
+
+        return back()->with('success', 'Appointment cancelled!');
+    }
+
     public function destroy($id)
     {
         $appointment = Appointment::findOrFail($id);

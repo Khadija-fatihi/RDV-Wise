@@ -34,8 +34,8 @@ class AdminAppointmentController extends Controller
         }
 
         $appointments    = $query->orderBy('date_heure', 'desc')->paginate(15);
-        $todayCount      = Appointment::whereDate('date_heure', today())->count();
-        $completedCount  = Appointment::where('statut', 'completed')->whereDate('date_heure', today())->count();
+        $todayCount      = Appointment::count();
+        $completedCount  = Appointment::whereIn('statut', ['completed', 'termine'])->count();
         $specialties     = Doctor::distinct()->pluck('specialite');
 
         return view('admin.Admin-Supervise-Appointments', compact(

@@ -176,6 +176,18 @@
                     </div>
                 </div>
 
+                <div class="space-y-2">
+                    <label class="block text-sm font-semibold text-on-surface-variant" for="organisme">Organisme de couverture</label>
+                    <select name="organisme" id="organisme" class="w-full px-4 py-3 bg-surface-bright border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all">
+                        <option value="">Sélectionnez votre organisme</option>
+                        <option value="CNSS" {{ old('organisme') === 'CNSS' ? 'selected' : '' }}>CNSS</option>
+                        <option value="AMO" {{ old('organisme') === 'AMO' ? 'selected' : '' }}>AMO</option>
+                        <option value="CNOPS" {{ old('organisme') === 'CNOPS' ? 'selected' : '' }}>CNOPS</option>
+                        <option value="Autre" {{ old('organisme') === 'Autre' ? 'selected' : '' }}>Autre</option>
+                    </select>
+                    <p class="text-xs text-on-surface-variant/70">Choisissez CNSS, AMO, CNOPS ou autre organisme.</p>
+                </div>
+
                 <!-- Password -->
                  @if ($errors->any())
     <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">

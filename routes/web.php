@@ -109,6 +109,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('appointments', AppointmentController::class)
         ->only(['index', 'create', 'store', 'show', 'destroy']);
+
+    Route::patch('/appointments/{id}/confirm', [AppointmentController::class, 'confirm'])->name('appointments.confirm');
+    Route::patch('/appointments/{id}/cancel', [AppointmentController::class, 'cancel'])->name('appointments.cancel');
 });
 
 /*
@@ -170,6 +173,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     // --- Patients ---
     Route::get('/patients', [AdminPatientController::class, 'index'])->name('patients');
+    Route::get('/patients/export', [AdminPatientController::class, 'export'])->name('patients.export');
     Route::get('/patients/{id}', [AdminPatientController::class, 'show'])->name('patients.show');
     Route::get('/patients/{id}/edit', [AdminPatientController::class, 'edit'])->name('patients.edit');
     Route::put('/patients/{id}', [AdminPatientController::class, 'update'])->name('patients.update');
@@ -186,10 +190,3 @@ Route::get('/signup-doctor', function () {
 })->middleware('guest')->name('auth.signup.doctor');
 
 Route::post('/signup-doctor', [DoctorSignupController::class, 'store'])->middleware('guest')->name('auth.signup.doctor.store');
-
-    // --- notification ---
-
-use App\Http\Controllers\NotificationController;
-
-Route::get('/notifications', [NotificationController::class, 'index'])
-    ->middleware('auth');

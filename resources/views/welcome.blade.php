@@ -3,7 +3,7 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>RDV Wise | Modern Healthcare Scheduling</title>
+<title>Smarte Santé | Health scheduling & smart care</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -89,7 +89,7 @@
 <!-- TopNavBar -->
 <header class="fixed top-0 w-full z-50 border-b border-slate-200 bg-[#F8FAFC] shadow-sm">
 <div class="flex justify-between items-center h-20 px-6 lg:px-12 max-w-7xl mx-auto">
-<div class="text-2xl font-black text-[#2563EB]">RDV Wise</div>
+<div class="text-2xl font-black text-[#2563EB] flex items-center gap-2"><span class="text-3xl">🩺</span> Smarte Santé</div>
 <nav class="hidden md:flex items-center space-x-8">
 <a class="text-[#2563EB] border-b-2 border-[#2563EB] pb-1 font-medium font-['Manrope'] tracking-tight" href="#">Services</a>
 <a class="text-slate-600 font-medium font-['Manrope'] tracking-tight hover:text-[#2563EB] transition-all" href="#">Specialties</a>
@@ -112,10 +112,10 @@
                         Intelligence in Care
                     </span>
 <h1 class="text-5xl lg:text-7xl font-extrabold text-on-surface leading-tight tracking-tight mb-8">
-                        Your Health Journey, <span class="text-primary-container">Simplified</span> with Intelligence.
+                        Smarte Santé, <span class="text-primary-container">your human-first</span> care journey.
                     </h1>
 <p class="text-xl text-on-surface-variant leading-relaxed mb-10 max-w-xl">
-                        The modern way to manage medical appointments, consultations, and health records with AI-driven insights.
+                        Find the right doctor, book a consultation, follow your care plan, and access smart health guidance in one elegant web experience.
                     </p>
 <div class="flex flex-wrap gap-4">
 <button class="px-8 py-4 bg-primary-container text-white font-bold rounded-xl shadow-xl shadow-blue-200 hover:brightness-110 active:scale-95 transition-all">
@@ -140,7 +140,7 @@
 <section class="py-24 bg-surface-container-lowest">
 <div class="max-w-7xl mx-auto px-6 lg:px-12">
 <div class="text-center mb-16">
-<h2 class="text-4xl font-extrabold text-on-surface mb-4">Why Choose RDV Wise?</h2>
+<h2 class="text-4xl font-extrabold text-on-surface mb-4">Why Choose Smarte Santé?</h2>
 <p class="text-on-surface-variant max-w-2xl mx-auto">Precision technology meets patient-first care to redefine your medical experience.</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">

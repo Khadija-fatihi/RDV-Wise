@@ -32,6 +32,7 @@ class SignupController extends Controller
                 'email'            => 'required|email|unique:users,email',
                 'cin'              => 'required|string',
                 'phone'            => 'required|string',
+                'organisme'        => 'nullable|string|max:50',
                 'password'         => 'required|string|min:6|confirmed',
             ]);
 
@@ -57,8 +58,9 @@ class SignupController extends Controller
                 ]);
 
                 Patient::create([
-                    'user_id' => $user->id,
-                    'cin'     => $validated['cin'],
+                    'user_id'    => $user->id,
+                    'cin'        => $validated['cin'],
+                    'organisme'  => $validated['organisme'] ?? null,
                 ]);
             });
 

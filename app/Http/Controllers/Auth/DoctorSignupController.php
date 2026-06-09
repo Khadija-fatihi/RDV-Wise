@@ -14,6 +14,13 @@ class DoctorSignupController extends Controller
 {
     public function store(Request $request)
     {
+        $currentUser = Auth::user();
+        if (!$currentUser instanceof \App\Models\User || !$currentUser->isAdmin()) {
+            return redirect()->route('login')->withErrors([
+                'email' => 'Doctor accounts are created by the admin team only. Please contact the admin to invite a doctor.',
+            ]);
+        }
+
         $validated = $request->validate([
             'name'      => 'required|string|max:255',
             'email'     => 'required|email|unique:users,email',

@@ -59,8 +59,8 @@
         </div>
         <h1 class="font-headline text-4xl font-extrabold tracking-tight text-primary">RDV Wise</h1>
         <div class="space-y-1">
-            <h2 class="font-headline text-2xl font-bold">Doctor Sign Up</h2>
-            <p class="text-on-surface-variant font-body">Create your professional account to join the network.</p>
+            <h2 class="font-headline text-2xl font-bold">Doctor Access</h2>
+            <p class="text-on-surface-variant font-body">Doctor accounts are created and verified by the admin team. Please contact the admin for an invitation.</p>
         </div>
     </header>
 
@@ -165,8 +165,12 @@
             </div>
 
             {{-- ✅ Submit button is INSIDE the form --}}
-            <button type="submit" class="w-full py-4 px-6 signature-gradient text-white font-bold rounded-xl shadow-[0_12px_24px_rgba(0,74,198,0.2)] active:scale-[0.98] transition-all duration-200">
-                Create Doctor Account
+            <div class="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+                Doctor self-registration is disabled. The admin creates doctor accounts after verification.
+            </div>
+
+            <button type="submit" class="w-full py-4 px-6 signature-gradient text-white font-bold rounded-xl shadow-[0_12px_24px_rgba(0,74,198,0.2)] active:scale-[0.98] transition-all duration-200" disabled>
+                Doctor Access is Admin-Managed
             </button>
 
         </form> {{-- ✅ form closes here, after all inputs --}}

@@ -12,6 +12,7 @@ class Patient extends Model
     protected $fillable = [
         'user_id',
         'cin',
+        'organisme',
         'sexe',
         'date_naissance',
         'type_dialyse',

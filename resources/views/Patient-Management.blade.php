@@ -200,7 +200,7 @@
 <img alt="Patient" class="w-10 h-10 rounded-full object-cover" data-alt="headshot of an elderly woman with silver hair kind eyes soft daylight studio portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUMZK3smtZKI8EA83iNpR-rMbXtTvsjcFtbnCXWJbqukAFmJ8UaYdEmeHJiJeGLMxHQ5CZl2NzyV4O12JUPBl98kEcfMR6NWKEATVToHXER8uZSkqSaP0DPMm4hzljDxwn60qvkram3eB87FfNjK5Put--oR7ShhISKw8SDqfa-5IUhXFhwhYE5eHsTBtfRIw90Zk1BxKbnQzvCGenDOb2b-CNMOU6gcqQh6o4lzfYkiid6uul7fCBPuINGR88jP_sAtVJ5pjNfJg">
 <div>
 <p class="text-sm font-bold text-slate-900 dark:text-white font-manrope">Elena Rodriguez</p>
-<p class="text-xs text-slate-500">elena.rod@email.com</p>
+<p class="text-xs text-slate-500">elena.rod@bardai.ma</p>
 </div>
 </div>
 </td>
@@ -237,7 +237,7 @@
 <img alt="Patient" class="w-10 h-10 rounded-full object-cover" data-alt="young man with glasses short hair smiling wearing a casual sweater bright office background warm tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYUFnH9zzsGq3TlPHpd8lpTwUyKB15oShz_zWiscZHCOixCJU_PUeK1-AvLKAfHkxnFm_aiDgIkNTiLfaGLn7jnypqHFeRV2rO9CnuPU1WWSGGrqtNuSqaghTzka245O2slNzObnt_xj5bYjoIB4q96ZSk3ss9hro3cwvjdp0M723MtcY8sFLfR1MfsjCTZ9Vw55Jr4vQ2-Aon0s_msZDLBa4G8_yyGXu-sQLgrFDdkGDzfu7lFCV8UW93496u0bVpkmp_owH8wo0">
 <div>
 <p class="text-sm font-bold text-slate-900 dark:text-white font-manrope">Marcus Chen</p>
-<p class="text-xs text-slate-500">m.chen@outlook.com</p>
+<p class="text-xs text-slate-500">m.chen@bardai.ma</p>
 </div>
 </div>
 </td>
@@ -271,7 +271,7 @@
 <img alt="Patient" class="w-10 h-10 rounded-full object-cover" data-alt="middle aged man with a beard thoughtful expression wearing a polo shirt outdoors blurry park background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQLoLwv6AhJ1xe4-H2ePtPq1CWDR7f0PdK1ve2dz3h8Rw1tY7yBw7GRxH7A7DNF3nCiiQ8DMcBZmi3lx7sAW6K2i-d7w7HXj6AY6psd_3P4V74hfgk-7Xre8QHT9zaCCC2LXQgNK73zMxwgmZZ4UTy1cfy6vIsYvobhlweAsrFvNPWQW3vRsh5J_pI0-zPQGsCHNger_CL1Q2nPunTLyfUDwBM9pGhlw85m0Ih7CQkvR-nI3f_isSGCoXKjS4yFOu7tuSzsOhzRkQ">
 <div>
 <p class="text-sm font-bold text-slate-900 dark:text-white font-manrope">Samuel Oak</p>
-<p class="text-xs text-slate-500">oak.s@provider.net</p>
+<p class="text-xs text-slate-500">oak.s@bardai.ma</p>
 </div>
 </div>
 </td>
@@ -303,7 +303,7 @@
 <img alt="Patient" class="w-10 h-10 rounded-full object-cover" data-alt="stylish woman in her 30s professional attire modern indoor lighting sharp focus on face vibrant colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6h_Q5RMUiFIjcZQIvTPMcw3F0pntIsrfGXIX0nM2Hl4McaM_wh3ASg257TDEfBynOPmnFVFrCaIcXVE1XRUw48XPB3zU24QtA7SdBB7xaCYXbboeAV4Vke022o8zW3K5MX9ocSmjHOD46pUPLRRQkDNsXUx-FPcMf8eCo8Tfd_nkaYit_8we5usqJlpNLsjhSp4jDabFMh07aoc7KFQb6w0tHSlZaKdNzPTrDpv5FxJ4shrjABp8MK-Ea6ATB9NBPPqyjcJfJ-mo">
 <div>
 <p class="text-sm font-bold text-slate-900 dark:text-white font-manrope">Sarah Jenkins</p>
-<p class="text-xs text-slate-500">s.jenkins@gmail.com</p>
+<p class="text-xs text-slate-500">s.jenkins@bardai.ma</p>
 </div>
 </div>
 </td>

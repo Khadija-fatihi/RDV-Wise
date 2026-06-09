@@ -103,6 +103,14 @@
     </header>
 
     <main class="space-y-6">
+        <div class="rounded-2xl border border-primary/10 bg-primary/5 p-4 text-sm text-on-surface-variant">
+            <p class="font-semibold text-primary">Role access</p>
+            <ul class="mt-2 space-y-1 list-disc list-inside text-xs">
+                <li>Patient: self-service login and appointments</li>
+                <li>Doctor: invited and verified by the admin team</li>
+                <li>Admin: dedicated admin email and dashboard</li>
+            </ul>
+        </div>
         <button class="w-full flex items-center justify-center gap-3 bg-surface-container-lowest py-3.5 px-4 rounded-xl shadow-[0_4px_12px_rgba(0,74,198,0.04)] hover:bg-surface-container transition-colors group">
             <svg class="w-5 h-5" viewBox="0 0 24 24">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -110,19 +118,15 @@
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
             </svg>
-            <span class="font-medium text-on-surface">Continue with Google</span>
         </button>
 
-        <div class="relative py-2">
-            <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-outline-variant opacity-30"></div></div>
-            <div class="relative flex justify-center text-xs uppercase"><span class="bg-surface px-4 text-on-surface-variant tracking-widest font-semibold">Or with Email</span></div>
-        </div>
+        
 
         @if ($errors->any())
             <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
-                <ul>
+                <ul class="list-disc list-inside space-y-1">
                     @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li class="text-sm">{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
@@ -134,15 +138,6 @@
                 <label class="block text-sm font-medium text-on-surface ml-1">Email Address</label>
                 <input name="email" value="{{ old('email') }}" class="w-full px-4 py-3 bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/40 text-on-surface transition-all placeholder:text-outline/60" placeholder="name@berdai.ma" type="email" required/>
             </div>
-            @if ($errors->any())
-    <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
             <div class="space-y-2">
                 <div class="flex justify-between items-center ml-1">
                     <label class="block text-sm font-medium text-on-surface">Password</label>
