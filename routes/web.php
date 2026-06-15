@@ -153,6 +153,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     // Statistics Dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('statistics');
+    Route::get('/dashboard/export', [AdminController::class, 'export'])->name('statistics.export');
 
     // Support page
     Route::get('/support', function () {

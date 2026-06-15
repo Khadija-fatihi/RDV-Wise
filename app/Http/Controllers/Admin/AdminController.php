@@ -8,16 +8,37 @@ use App\Models\Patient;
 use App\Models\Doctor;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class AdminController extends Controller
 {
-    public function dashboard()
+    public function dashboard(Request $request)
     {
-        $totalUsers         = User::count();
-        $totalPatients      = Patient::count();
-        $totalDoctors       = Doctor::count();
-        $totalAppointments  = Appointment::count();
-        $totalConsultations = Appointment::where('statut', 'completed')->count();
+        $range = (int) $request->query('range', 30);
+        $range = in_array($range, [7, 30, 90], true) ? $range : 30;
+        $since = now()->subDays($range);
+
+        $totalUsers         = User::where('created_at', '>=', $since)->count();
+        $totalPatients      = Patient::where('created_at', '>=', $since)->count();
+        $totalDoctors       = Doctor::where('created_at', '>=', $since)->count();
+        $malePatients       = Patient::where('created_at', '>=', $since)->where('sexe', 'M')->count();
+        $femalePatients     = Patient::where('created_at', '>=', $since)->where('sexe', 'F')->count();
+        $dialysePatients    = Patient::where('created_at', '>=', $since)->whereNotNull('type_dialyse')->count();
+        $avgSessions        = Patient::where('created_at', '>=', $since)->avg('seances_par_semaine') ?? 0;
+        $totalAppointments  = Appointment::where('created_at', '>=', $since)->count();
+        $totalConsultations = Appointment::where('created_at', '>=', $since)
+            ->where('statut', 'completed')->count();
+
+        $previousSince = now()->subDays($range * 2);
+        $previousUsers = User::whereBetween('created_at', [$previousSince, $since])->count();
+        $previousAppointments = Appointment::whereBetween('created_at', [$previousSince, $since])->count();
+        $previousConsultations = Appointment::whereBetween('created_at', [$previousSince, $since])
+            ->where('statut', 'completed')->count();
+
+        $userGrowth = $previousUsers > 0 ? round((($totalUsers - $previousUsers) / $previousUsers) * 100, 1) : 0;
+        $appointmentGrowth = $previousAppointments > 0 ? round((($totalAppointments - $previousAppointments) / $previousAppointments) * 100, 1) : 0;
+        $consultationGrowth = $previousConsultations > 0 ? round((($totalConsultations - $previousConsultations) / $previousConsultations) * 100, 1) : 0;
+        $platformGrowth = $range > 0 ? round((($totalAppointments - $previousAppointments) / max(1, $previousAppointments)) * 100, 1) : 0;
 
         $specialtyStats = Doctor::selectRaw('specialite as name, COUNT(*) as count')
             ->groupBy('specialite')
@@ -36,10 +57,51 @@ class AdminController extends Controller
             'totalUsers',
             'totalPatients',
             'totalDoctors',
+            'malePatients',
+            'femalePatients',
+            'dialysePatients',
+            'avgSessions',
             'totalAppointments',
             'totalConsultations',
-            'specialtyStats'
+            'specialtyStats',
+            'range',
+            'userGrowth',
+            'appointmentGrowth',
+            'consultationGrowth',
+            'platformGrowth'
         ));
+    }
+
+    public function export(Request $request)
+    {
+        $range = (int) $request->query('range', 30);
+        $range = in_array($range, [7, 30, 90], true) ? $range : 30;
+        $since = now()->subDays($range);
+
+        $rows = [
+            ['Period', 'Total Users', 'Total Consultations', 'Total Appointments', 'Total Patients'],
+            [
+                'Last ' . $range . ' Days',
+                User::where('created_at', '>=', $since)->count(),
+                Appointment::where('created_at', '>=', $since)->where('statut', 'completed')->count(),
+                Appointment::where('created_at', '>=', $since)->count(),
+                Patient::where('created_at', '>=', $since)->count(),
+            ],
+        ];
+
+        $csv = fopen('php://temp', 'w+');
+        foreach ($rows as $row) {
+            fputcsv($csv, $row);
+        }
+
+        rewind($csv);
+        $content = stream_get_contents($csv);
+        fclose($csv);
+
+        return Response::make($content, 200, [
+            'Content-Type' => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="admin-dashboard-export.csv"',
+        ]);
     }
 
     public function notifications()

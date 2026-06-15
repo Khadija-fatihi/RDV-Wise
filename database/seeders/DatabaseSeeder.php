@@ -15,10 +15,12 @@ class DatabaseSeeder extends Seeder {
         // ── Admin ──────────────────────────────────────────────
         User::create([
             'name'  => 'Admin BERDAI',
-            'email' => 'admin@berdai.ma',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
             'role'  => 'admin',
-            'email_verified_at' => now(),
+            'email_verified_at' => now()->subDays(rand(1, 45)),
+            'created_at' => now()->subDays(rand(1, 90)),
+            'updated_at' => now()->subDays(rand(1, 90)),
         ]);
 
         // ── Médecins ───────────────────────────────────────────
@@ -31,10 +33,12 @@ class DatabaseSeeder extends Seeder {
         foreach ($medecinData as $i => $md) {
             $user = User::create([
                 'name'  => $md['name'],
-                'email' => 'medecin' . ($i+1) . '@berdai.ma',
+                'email' => 'medecin' . ($i+1) . '@gmail.com',
                 'password' => Hash::make('password'),
                 'role'  => 'medecin',
-                'email_verified_at' => now(),
+                'email_verified_at' => now()->subDays(rand(1, 45)),
+                'created_at' => now()->subDays(rand(1, 90)),
+                'updated_at' => now()->subDays(rand(1, 90)),
             ]);
             Doctor::create([
                 'user_id'    => $user->id,
@@ -45,6 +49,8 @@ class DatabaseSeeder extends Seeder {
                 'heure_fin'     => '17:00:00',
                 'consultation_duree' => 30,
                 'tarif'      => 200.00,
+                'created_at' => now()->subDays(rand(1, 90)),
+                'updated_at' => now()->subDays(rand(1, 90)),
             ]);
         }
 
@@ -59,10 +65,12 @@ class DatabaseSeeder extends Seeder {
         foreach ($patientsData as $i => $pd) {
             $user = User::create([
                 'name'  => $pd['name'],
-                'email' => 'patient' . ($i+1) . '@berdai.ma',
+                'email' => 'patient' . ($i+1) . '@gmail.com',
                 'password' => Hash::make('password'),
                 'role'  => 'patient',
-                'email_verified_at' => now(),
+                'email_verified_at' => now()->subDays(rand(1, 45)),
+                'created_at' => now()->subDays(rand(1, 90)),
+                'updated_at' => now()->subDays(rand(1, 90)),
             ]);
             Patient::create([
                 'user_id'      => $user->id,
@@ -72,30 +80,34 @@ class DatabaseSeeder extends Seeder {
                 'type_dialyse' => $pd['type_dialyse'],
                 'seances_par_semaine' => 3,
                 'groupe_sanguin' => ['A+','B+','O+','AB+'][array_rand(['A+','B+','O+','AB+'])],
+                'created_at' => now()->subDays(rand(1, 90)),
+                'updated_at' => now()->subDays(rand(1, 90)),
             ]);
         }
 
         // ── Quelques RDV ──────────────────────────────────────
         $patients = Patient::all();
         $medecins = Doctor::all();
-        $statuts  = ['en_attente', 'confirme', 'termine', 'annule'];
-        $types    = ['dialyse', 'consultation', 'controle'];
+        $statuts  = ['pending', 'confirmed', 'completed', 'cancelled'];
+        $types    = ['consultation', 'hemodialyse', 'dialyse_peritoneale', 'suivi', 'urgence'];
 
         for ($i = 0; $i < 20; $i++) {
             Appointment::create([
                 'patient_id' => $patients->random()->id,
                 'medecin_id' => $medecins->random()->id,
-                'date_heure' => now()->addDays(rand(-30, 30))->setHour(rand(8,16))->setMinute(0),
+                'date_heure' => now()->subDays(rand(1, 90))->setHour(rand(8,16))->setMinute(0),
                 'statut'     => $statuts[array_rand($statuts)],
                 'type_seance'=> $types[array_rand($types)],
                 'motif'      => 'Séance de contrôle mensuel',
                 'duree'      => 30,
+                'created_at' => now()->subDays(rand(1, 90)),
+                'updated_at' => now()->subDays(rand(1, 90)),
             ]);
         }
 
         $this->command->info(' Données de démo insérées avec succès!');
-        $this->command->info(' Admin: admin@berdai.ma / password');
-        $this->command->info(' Médecin: medecin1@berdai.ma / password');
-        $this->command->info(' Patient: patient1@berdai.ma / password');
+        $this->command->info(' Admin: admin@gmail.com / password');
+        $this->command->info(' Médecin: medecin1@gmail.com / password');
+        $this->command->info(' Patient: patient1@gmail.com / password');
     }
 }   

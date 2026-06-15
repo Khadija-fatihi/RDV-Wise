@@ -13,7 +13,7 @@
         theme: {
             extend: {
                 colors: {
-                    "primary-container": "#2563eb",
+                    "primary-container": "#2u563eb",
                     "on-primary-container": "#eeefff",
                     "background": "#f7f9fb",
                     "on-background": "#191c1e",
@@ -79,10 +79,10 @@
 <main class="ml-64 min-h-screen">
     <!-- Top Bar -->
     <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 shadow-sm flex items-center justify-between px-6 h-16">
-        <div class="relative w-full max-w-md">
+        <form id="doctor-search-form" method="GET" action="{{ route('admin.doctors') }}" class="relative w-full max-w-md">
             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
-            <input class="w-full pl-10 pr-4 py-2 bg-slate-100 border-transparent focus:bg-white focus:ring-2 focus:ring-blue-600/20 rounded-lg text-sm outline-none transition-all" placeholder="Search doctors..." type="text"/>
-        </div>
+            <input name="search" value="{{ request('search') }}" class="w-full pl-10 pr-4 py-2 bg-slate-100 border-transparent focus:bg-white focus:ring-2 focus:ring-blue-600/20 rounded-lg text-sm outline-none transition-all" placeholder="Search doctors..." type="text"/>
+        </form>
         <div class="flex items-center gap-4">
             <a href="{{ route('admin.notifications') }}" class="p-2 text-slate-500 hover:bg-slate-100 rounded-full relative">
                 <span class="material-symbols-outlined">notifications</span>
@@ -104,7 +104,7 @@
                 <p class="text-slate-500 mt-1">Directory of all practicing medical professionals.</p>
             </div>
             <div class="flex items-center gap-3">
-                <button class="px-4 py-2.5 bg-white border border-slate-200 text-slate-700 font-semibold rounded-lg flex items-center gap-2 hover:bg-slate-50 transition-all shadow-sm">
+                <button type="submit" form="doctor-search-form" class="px-4 py-2.5 bg-white border border-slate-200 text-slate-700 font-semibold rounded-lg flex items-center gap-2 hover:bg-slate-50 transition-all shadow-sm">
                     <span class="material-symbols-outlined">filter_list</span> Filter
                 </button>
                 <a href="{{ route('admin.doctors.create') }}" class="px-5 py-2.5 bg-primary-container text-white font-bold rounded-lg flex items-center gap-2 hover:opacity-90 transition-all shadow-lg active:scale-95">

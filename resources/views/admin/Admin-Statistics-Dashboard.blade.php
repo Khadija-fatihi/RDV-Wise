@@ -87,13 +87,17 @@
                 <p class="text-slate-500 mt-1">Real-time clinical performance and patient metrics.</p>
             </div>
             <div class="flex items-center gap-3">
-                <div class="bg-white px-4 py-2 rounded-lg border border-slate-200 flex items-center gap-2 cursor-pointer hover:bg-slate-50">
-                    <span class="material-symbols-outlined text-slate-400 text-sm">calendar_month</span>
-                    <span class="text-sm font-medium text-slate-700">Last 30 Days</span>
-                </div>
-                <button class="bg-blue-600 text-white px-5 py-2 rounded-lg font-medium text-sm flex items-center gap-2 shadow-lg hover:bg-blue-700 transition-all">
+                <form method="GET" action="{{ route('admin.statistics') }}" class="flex items-center gap-2">
+                    <label class="sr-only" for="range">Select period</label>
+                    <select id="range" name="range" onchange="this.form.submit()" class="bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-medium text-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none">
+                        <option value="7" {{ (request('range', 30) == 7) ? 'selected' : '' }}>Last 7 Days</option>
+                        <option value="30" {{ (request('range', 30) == 30) ? 'selected' : '' }}>Last 30 Days</option>
+                        <option value="90" {{ (request('range', 30) == 90) ? 'selected' : '' }}>Last 90 Days</option>
+                    </select>
+                </form>
+                <a href="{{ route('admin.statistics.export', ['range' => request('range', 30)]) }}" class="bg-blue-600 text-white px-5 py-2 rounded-lg font-medium text-sm flex items-center gap-2 shadow-lg hover:bg-blue-700 transition-all">
                     <span class="material-symbols-outlined text-sm">file_download</span> Export Data
-                </button>
+                </a>
             </div>
         </div>
 
@@ -104,8 +108,8 @@
                     <div class="p-3 bg-blue-50 text-blue-600 rounded-lg">
                         <span class="material-symbols-outlined">groups</span>
                     </div>
-                    <div class="flex items-center text-emerald-500 text-sm font-bold">
-                        <span class="material-symbols-outlined text-xs">trending_up</span> 12.5%
+                    <div class="flex items-center {{ $userGrowth >= 0 ? 'text-emerald-500' : 'text-rose-500' }} text-sm font-bold">
+                        <span class="material-symbols-outlined text-xs">{{ $userGrowth >= 0 ? 'trending_up' : 'trending_down' }}</span> {{ abs($userGrowth) }}%
                     </div>
                 </div>
                 <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Total Users</p>
@@ -116,8 +120,8 @@
                     <div class="p-3 bg-teal-50 text-teal-600 rounded-lg">
                         <span class="material-symbols-outlined">stethoscope</span>
                     </div>
-                    <div class="flex items-center text-emerald-500 text-sm font-bold">
-                        <span class="material-symbols-outlined text-xs">trending_up</span> 8.2%
+                    <div class="flex items-center {{ $consultationGrowth >= 0 ? 'text-emerald-500' : 'text-rose-500' }} text-sm font-bold">
+                        <span class="material-symbols-outlined text-xs">{{ $consultationGrowth >= 0 ? 'trending_up' : 'trending_down' }}</span> {{ abs($consultationGrowth) }}%
                     </div>
                 </div>
                 <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Total Consultations</p>
@@ -128,8 +132,8 @@
                     <div class="p-3 bg-indigo-50 text-indigo-600 rounded-lg">
                         <span class="material-symbols-outlined">payments</span>
                     </div>
-                    <div class="flex items-center text-emerald-500 text-sm font-bold">
-                        <span class="material-symbols-outlined text-xs">trending_up</span> 18.4%
+                    <div class="flex items-center {{ $appointmentGrowth >= 0 ? 'text-emerald-500' : 'text-rose-500' }} text-sm font-bold">
+                        <span class="material-symbols-outlined text-xs">{{ $appointmentGrowth >= 0 ? 'trending_up' : 'trending_down' }}</span> {{ abs($appointmentGrowth) }}%
                     </div>
                 </div>
                 <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Total Appointments</p>
@@ -140,8 +144,8 @@
                     <div class="p-3 bg-sky-50 text-sky-600 rounded-lg">
                         <span class="material-symbols-outlined">analytics</span>
                     </div>
-                    <div class="flex items-center text-amber-500 text-sm font-bold">
-                        <span class="material-symbols-outlined text-xs">trending_flat</span> 2.1%
+                    <div class="flex items-center {{ $platformGrowth >= 0 ? 'text-emerald-500' : 'text-rose-500' }} text-sm font-bold">
+                        <span class="material-symbols-outlined text-xs">{{ $platformGrowth >= 0 ? 'trending_up' : 'trending_down' }}</span> {{ abs($platformGrowth) }}%
                     </div>
                 </div>
                 <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Platform Growth</p>
@@ -193,20 +197,7 @@
                         @endforeach
                     </div>
                 </div>
-                <!-- Insight Card -->
-                <div class="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-6 text-white shadow-xl">
-                    <h4 class="font-bold mb-2" style="font-family:'Manrope'">Efficiency Insight</h4>
-                    <p class="text-blue-100 text-sm mb-6">Average patient wait time decreased by 4 minutes this month.</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                            <span class="material-symbols-outlined text-white">auto_awesome</span>
-                        </div>
-                        <div>
-                            <p class="text-xs font-bold uppercase tracking-widest text-blue-200">Optimization Goal</p>
-                            <p class="text-sm font-medium">Reach 95% satisfaction</p>
-                        </div>
-                    </div>
-                </div>
+               
             </div>
         </div>
 
@@ -215,26 +206,28 @@
             <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
                 <div class="flex items-center justify-between mb-6">
                     <h4 class="font-bold text-slate-900" style="font-family:'Manrope'">Patient Demographics</h4>
+                    <span class="text-xs text-slate-500">Last {{ $range ?? 30 }} days</span>
                 </div>
-                <p class="text-slate-400 text-sm text-center py-8">Connect backend to display real demographic data.</p>
-            </div>
-            <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
-                <div class="flex items-center justify-between mb-6">
-                    <h4 class="font-bold text-slate-900" style="font-family:'Manrope'">System Activity</h4>
-                    <a href="#" class="text-xs text-blue-600 font-semibold">View Audit Logs</a>
-                </div>
-                <div class="space-y-6">
-                    <div class="flex gap-4">
-                        <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-                            <span class="material-symbols-outlined text-sm text-blue-600">add_circle</span>
-                        </div>
-                        <div>
-                            <p class="text-sm font-semibold text-slate-900">System ready</p>
-                            <p class="text-xs text-slate-500">Now • Auto</p>
-                        </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between rounded-xl bg-slate-50 p-4">
+                        <span class="text-sm text-slate-600">Male patients</span>
+                        <strong class="text-lg font-bold text-slate-900">{{ $malePatients ?? 0 }}</strong>
+                    </div>
+                    <div class="flex items-center justify-between rounded-xl bg-slate-50 p-4">
+                        <span class="text-sm text-slate-600">Female patients</span>
+                        <strong class="text-lg font-bold text-slate-900">{{ $femalePatients ?? 0 }}</strong>
+                    </div>
+                    <div class="flex items-center justify-between rounded-xl bg-slate-50 p-4">
+                        <span class="text-sm text-slate-600">Dialysis patients</span>
+                        <strong class="text-lg font-bold text-slate-900">{{ $dialysePatients ?? 0 }}</strong>
+                    </div>
+                    <div class="flex items-center justify-between rounded-xl bg-slate-50 p-4">
+                        <span class="text-sm text-slate-600">Avg. sessions/week</span>
+                        <strong class="text-lg font-bold text-slate-900">{{ number_format($avgSessions ?? 0, 1) }}</strong>
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
 </main>
