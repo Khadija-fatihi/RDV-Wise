@@ -104,11 +104,11 @@
 
     <main class="space-y-6">
         <div class="rounded-2xl border border-primary/10 bg-primary/5 p-4 text-sm text-on-surface-variant">
-            <p class="font-semibold text-primary">Role access</p>
+            <p class="font-semibold text-primary">Test Accounts</p>
             <ul class="mt-2 space-y-1 list-disc list-inside text-xs">
-                <li>Patient: self-service login and appointments</li>
-                <li>Doctor: invited and verified by the admin team</li>
-                <li>Admin: dedicated admin email and dashboard</li>
+                <li>Patient: patient1@gmail.com / password</li>
+                <li>Doctor: medecin1@gmail.com / password</li>
+                <li>Admin: admin@gmail.com / password</li>
             </ul>
         </div>
         <button class="w-full flex items-center justify-center gap-3 bg-surface-container-lowest py-3.5 px-4 rounded-xl shadow-[0_4px_12px_rgba(0,74,198,0.04)] hover:bg-surface-container transition-colors group">
@@ -154,7 +154,7 @@
     <footer class="text-center pt-4">
         <p class="text-on-surface-variant font-medium">
             Don't have an account?
-            <a class="text-primary font-bold hover:underline underline-offset-4 ml-1" href="{{ route('auth.identify') }}">Sign Up</a>
+            <a class="text-primary font-bold hover:underline underline-offset-4 ml-1" href="{{ route('auth.signup.patient') }}">Sign Up</a>
         </p>
     </footer>
 </div>

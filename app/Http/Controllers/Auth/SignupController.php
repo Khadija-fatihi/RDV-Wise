@@ -20,10 +20,10 @@ class SignupController extends Controller
 
         try {
             // 🔒 EMAIL DOMAIN CHECK
-            if (!str_ends_with($request->email, '@berdai.ma')) {
+            if (!str_ends_with($request->email, '@gmail.com')) {
                 return redirect()->back()
                     ->withInput()
-                    ->withErrors(['email' => 'Only @berdai.ma emails are allowed']);
+                    ->withErrors(['email' => 'Only @gmail.com emails are allowed']);
             }
 
             // ✅ Validation

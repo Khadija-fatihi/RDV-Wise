@@ -3,7 +3,7 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Smarte Santé | Health scheduling & smart care</title>
+<title>Smart Santé | Health scheduling & smart care</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -89,7 +89,7 @@
 <!-- TopNavBar -->
 <header class="fixed top-0 w-full z-50 border-b border-slate-200 bg-[#F8FAFC] shadow-sm">
 <div class="flex justify-between items-center h-20 px-6 lg:px-12 max-w-7xl mx-auto">
-<div class="text-2xl font-black text-[#2563EB] flex items-center gap-2"><span class="text-3xl">🩺</span> Smarte Santé</div>
+<div class="text-2xl font-black text-[#2563EB] flex items-center gap-2"><span class="text-3xl">🩺</span> Smart Santé</div>
 <nav class="hidden md:flex items-center space-x-8">
 <a class="text-[#2563EB] border-b-2 border-[#2563EB] pb-1 font-medium font-['Manrope'] tracking-tight" href="#">Services</a>
 <a class="text-slate-600 font-medium font-['Manrope'] tracking-tight hover:text-[#2563EB] transition-all" href="#">Specialties</a>
@@ -98,7 +98,7 @@
 <div class="flex items-center gap-4">
 <button class="px-6 py-2 rounded-lg font-bold text-[#2563EB] hover:bg-primary-fixed active:scale-95 transition-all"> <a href="{{ route('login') }}"
 > Sign In</a></button>
-<button class="px-6 py-2 rounded-lg font-bold bg-primary-container text-white shadow-lg active:scale-95 transition-all"> <a href="{{ route('login') }}"
+<button class="px-6 py-2 rounded-lg font-bold bg-primary-container text-white shadow-lg active:scale-95 transition-all"> <a href="{{ route('auth.signup.patient') }}"
 > Get Started</a> </button>
 </div>
 </div>
@@ -119,7 +119,7 @@
                     </p>
 <div class="flex flex-wrap gap-4">
 <button class="px-8 py-4 bg-primary-container text-white font-bold rounded-xl shadow-xl shadow-blue-200 hover:brightness-110 active:scale-95 transition-all">
- <a href="{{ route('login') }}"
+ <a href="{{ route('auth.signup.patient') }}"
 > Get Started</a>                         </button>
 <button class="px-8 py-4 bg-surface-container text-on-surface font-bold rounded-xl hover:bg-surface-container-high active:scale-95 transition-all flex items-center gap-2">
                             Learn More
@@ -218,7 +218,7 @@
 <div class="relative z-10">
 <h2 class="text-4xl lg:text-5xl font-extrabold text-white mb-6">Ready to join the modern healthcare network?</h2>
 <p class="text-slate-400 text-lg mb-10 max-w-2xl mx-auto">Experience the future of medical management today. Join thousands of users who have simplified their health journey.</p>
-<a href="{{ route('login') }}" class="inline-flex px-10 py-5 bg-primary-container text-white font-black text-lg rounded-xl shadow-2xl hover:shadow-blue-500/20 active:scale-95 transition-all">
+<a href="{{ route('auth.signup.patient') }}" class="inline-flex px-10 py-5 bg-primary-container text-white font-black text-lg rounded-xl shadow-2xl hover:shadow-blue-500/20 active:scale-95 transition-all">
                         Create Account
                     </a>
 </div>

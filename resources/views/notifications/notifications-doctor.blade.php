@@ -17,18 +17,12 @@
                         <span class="font-semibold">All Notifications</span>
                         <span class="ml-auto bg-white/20 text-xs px-2 py-0.5 rounded-full">12</span>
                     </a>
-                    <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors rounded-xl group" href="#">
-                        <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">event</span>
-                        <span class="font-medium">Appointments</span>
-                    </a>
+                   
                     <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors rounded-xl group" href="#">
                         <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">person_add</span>
                         <span class="font-medium">Patient Requests</span>
                     </a>
-                    <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-colors rounded-xl group" href="#">
-                        <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">settings_suggest</span>
-                        <span class="font-medium">System</span>
-                    </a>
+                   
                 </nav>
             </div>
 

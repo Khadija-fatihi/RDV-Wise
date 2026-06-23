@@ -3,149 +3,238 @@
 @section('title', 'Profile - RDV Wise')
 
 @section('content')
+<div class="container py-4">
+    <div class="mb-4">
+        @if (session('status'))
+            <div class="alert alert-success rounded-4">{{ session('status') }}</div>
+        @endif
+        <p class="text-uppercase small fw-semibold text-primary mb-2">My Profile</p>
+        <h1 class="h2 fw-bold mb-2">Patient Profile</h1>
+        <p class="text-muted mb-0">Manage your account details, health preferences, and notification settings.</p>
+    </div>
 
-<div class="mb-8">
-    <h1 class="text-3xl font-extrabold tracking-tight text-on-surface flex items-center gap-2"><span class="material-symbols-outlined text-primary">person</span> Patient Profile</h1>
-    <p class="text-on-surface-variant mt-1">Manage your health data, account security, and app preferences.</p>
-</div>
-
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-   
-    <div class="lg:col-span-4 space-y-8">
-        <div class="bg-white rounded-xl shadow-sm border border-outline-variant p-8 flex flex-col items-center text-center">
-            <div class="relative group">
-                <div class="w-32 h-32 rounded-full border-4 border-primary-container overflow-hidden mb-4 shadow-md">
-                    <div class="w-full h-full flex items-center justify-center bg-primary-fixed text-primary text-4xl font-extrabold uppercase">
-                        {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 2)) }}
-                    </div>
+    <div class="row g-4">
+        <div class="col-12 col-lg-4">
+            <section class="card border-0 shadow-sm rounded-4 p-4 text-center h-100">
+                <div class="mx-auto mb-3 rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center" style="width: 96px; height: 96px; font-size: 2rem; font-weight: 700;">
+                    {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 2)) }}
                 </div>
-                <button class="absolute bottom-2 right-2 bg-primary text-on-primary w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined text-sm">edit</span>
+                <h2 class="h4 fw-bold mb-1">{{ auth()->user()->name ?? 'Patient Name' }}</h2>
+                <p class="text-muted small mb-3">Member since {{ auth()->user()->created_at?->format('M Y') ?? 'Jan 2023' }}</p>
+                <div id="profileSummaryBadges" class="d-flex flex-wrap justify-content-center gap-2" role="button" tabindex="0" aria-label="Edit profile details">
+                    <span class="badge bg-primary-subtle text-primary">Blood Type: {{ auth()->user()->patient->groupe_sanguin ?? 'Not set' }}</span>
+                    <span class="badge bg-success-subtle text-success">Verified Identity</span>
+                </div>
+                <button type="button" id="editProfileBtn" class="btn btn-outline-primary rounded-4 mt-4 w-100">
+                    <span class="material-symbols-outlined align-middle me-1">edit</span>
+                    Edit Profile
                 </button>
-            </div>
-            <h2 class="text-xl font-bold text-on-surface">{{ auth()->user()->name ?? 'Patient Name' }}</h2>
-            <p class="text-on-surface-variant">Member since {{ auth()->user()->created_at?->format('M Y') ?? 'Jan 2023' }}</p>
-            <div class="mt-6 flex flex-wrap gap-2 justify-center">
-                <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold border border-blue-100">Blood Type: O+</span>
-                <span class="bg-teal-50 text-teal-700 px-3 py-1 rounded-full text-xs font-semibold border border-teal-100">Verified Identity</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Right Column -->
-    <div class="lg:col-span-8 space-y-8">
-        <!-- Personal Information -->
-        <div class="bg-white rounded-xl shadow-sm border border-outline-variant">
-            <div class="p-6 border-b border-outline-variant flex justify-between items-center">
-                <h3 class="text-lg font-bold">Personal Information</h3>
-                <button class="text-primary font-bold text-sm inline-flex items-center gap-2"><span class="material-symbols-outlined text-base">save</span>Save Changes</button>
-            </div>
-            <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-1">
-                    <label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Full Name</label>
-                    <input class="w-full bg-surface border-outline-variant rounded-lg p-3 focus:ring-primary focus:border-primary" type="text" value="{{ auth()->user()->name ?? '' }}"/>
-                </div>
-                <div class="space-y-1">
-                    <label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Email Address</label>
-                    <input class="w-full bg-surface border-outline-variant rounded-lg p-3 focus:ring-primary focus:border-primary" type="email" value="{{ auth()->user()->email ?? '' }}"/>
-                </div>
-                <div class="space-y-1">
-                    <label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">CIN / National ID</label>
-                    <input class="w-full bg-surface border-outline-variant rounded-lg p-3 focus:ring-primary focus:border-primary" type="text" value="{{ auth()->user()->patient->cin ?? '' }}"/>
-                </div>
-                <div class="space-y-1">
-                    <label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Phone Number</label>
-                    <input class="w-full bg-surface border-outline-variant rounded-lg p-3 focus:ring-primary focus:border-primary" type="tel" value="{{ auth()->user()->phone ?? '' }}"/>
-                </div>
-                <div class="space-y-1">
-                    <label class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Organisme</label>
-                    <input class="w-full bg-surface border-outline-variant rounded-lg p-3 focus:ring-primary focus:border-primary" type="text" value="{{ auth()->user()->patient->organisme ?? 'CNSS / AMO / CNOPS' }}"/>
-                </div>
-            </div>
+            </section>
         </div>
 
-        <!-- Health Preferences -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="bg-white rounded-xl shadow-sm border border-outline-variant overflow-hidden">
-                <div class="p-4 bg-error-container/20 border-b border-error-container/30 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-error">warning</span>
-                    <span class="font-bold text-error">Allergies</span>
-                </div>
-                <div class="p-6 space-y-4">
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-surface-container px-3 py-1.5 rounded-lg flex items-center gap-2 text-sm">
-                            Penicillin <button class="text-on-surface-variant">×</button>
-                        </span>
-                        <span class="bg-surface-container px-3 py-1.5 rounded-lg flex items-center gap-2 text-sm">
-                            Latex <button class="text-on-surface-variant">×</button>
-                        </span>
-                    </div>
-                    <button class="text-sm font-bold text-primary flex items-center gap-1">
-                        <span class="material-symbols-outlined text-base">add</span> Add Allergy
+        <div class="col-12 col-lg-8 d-grid gap-4">
+            <form id="profileForm" action="{{ route('profile.update') }}" method="POST" class="card border-0 shadow-sm rounded-4 p-4">
+                @csrf
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3 class="h5 fw-bold mb-0">Personal Information</h3>
+                    <button type="submit" class="btn btn-primary rounded-4">
+                        <span class="material-symbols-outlined align-middle me-1">save</span>
+                        Save Changes
                     </button>
                 </div>
-            </div>
-
-            <div class="bg-white rounded-xl shadow-sm border border-outline-variant overflow-hidden">
-                <div class="p-4 bg-tertiary-container/10 border-b border-tertiary-container/20 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-tertiary">medical_services</span>
-                    <span class="font-bold text-tertiary">Chronic Conditions</span>
-                </div>
-                <div class="p-6 space-y-4">
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-surface-container px-3 py-1.5 rounded-lg flex items-center gap-2 text-sm">
-                            Asthma <button class="text-on-surface-variant">×</button>
-                        </span>
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold small text-uppercase text-muted">Full Name</label>
+                        <input class="form-control rounded-4" type="text" name="name" value="{{ auth()->user()->name ?? '' }}">
                     </div>
-                    <button class="text-sm font-bold text-primary flex items-center gap-1">
-                        <span class="material-symbols-outlined text-base">add</span> Add Condition
-                    </button>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold small text-uppercase text-muted">Email Address</label>
+                        <input class="form-control rounded-4" type="email" name="email" value="{{ auth()->user()->email ?? '' }}">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold small text-uppercase text-muted">CIN / National ID</label>
+                        <input class="form-control rounded-4" type="text" name="cin" value="{{ auth()->user()->patient->cin ?? '' }}">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold small text-uppercase text-muted">Phone Number</label>
+                        <input class="form-control rounded-4" type="tel" name="phone" value="{{ auth()->user()->phone ?? '' }}">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold small text-uppercase text-muted">Blood Type</label>
+                        <select class="form-select rounded-4" name="groupe_sanguin">
+                            <option value="" {{ empty(auth()->user()->patient->groupe_sanguin) ? 'selected' : '' }}>Select blood type</option>
+                            <option value="A+" {{ (auth()->user()->patient->groupe_sanguin ?? '') === 'A+' ? 'selected' : '' }}>A+</option>
+                            <option value="A-" {{ (auth()->user()->patient->groupe_sanguin ?? '') === 'A-' ? 'selected' : '' }}>A-</option>
+                            <option value="B+" {{ (auth()->user()->patient->groupe_sanguin ?? '') === 'B+' ? 'selected' : '' }}>B+</option>
+                            <option value="B-" {{ (auth()->user()->patient->groupe_sanguin ?? '') === 'B-' ? 'selected' : '' }}>B-</option>
+                            <option value="AB+" {{ (auth()->user()->patient->groupe_sanguin ?? '') === 'AB+' ? 'selected' : '' }}>AB+</option>
+                            <option value="AB-" {{ (auth()->user()->patient->groupe_sanguin ?? '') === 'AB-' ? 'selected' : '' }}>AB-</option>
+                            <option value="O+" {{ (auth()->user()->patient->groupe_sanguin ?? '') === 'O+' ? 'selected' : '' }}>O+</option>
+                            <option value="O-" {{ (auth()->user()->patient->groupe_sanguin ?? '') === 'O-' ? 'selected' : '' }}>O-</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold small text-uppercase text-muted">Organisme</label>
+                        <input class="form-control rounded-4" type="text" name="organisme" value="{{ auth()->user()->patient->organisme ?? 'CNSS / AMO / CNOPS' }}">
+                    </div>
+                </div>
+            </form>
+
+            <div class="row g-4">
+                <div class="col-12 col-md-6">
+                    <section class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                        <div class="d-flex align-items-center gap-2 mb-3 text-danger">
+                            <span class="material-symbols-outlined">warning</span>
+                            <h3 class="h6 fw-bold mb-0">Allergies</h3>
+                        </div>
+
+                        <form id="allergyForm" class="d-flex gap-2 mb-3">
+                            <input id="allergyInput" class="form-control form-control-sm rounded-4" type="text" placeholder="Add an allergy (e.g. Penicillin)" aria-label="Allergy name">
+                            <button type="submit" class="btn btn-outline-danger rounded-4 btn-sm">
+                                <span class="material-symbols-outlined align-middle me-1">add</span>
+                                Add
+                            </button>
+                        </form>
+                        <div id="allergiesList" class="d-flex flex-wrap gap-2"></div>
+                    </section>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <section class="card border-0 shadow-sm rounded-4 p-4 h-100" id="conditionsCard">
+                        <div class="d-flex align-items-center gap-2 mb-3 text-primary">
+                            <span class="material-symbols-outlined">medical_services</span>
+                            <h3 class="h6 fw-bold mb-0">Chronic Conditions</h3>
+                        </div>
+
+                        <form id="conditionForm" class="d-flex gap-2 mb-3">
+                            <input id="conditionInput" class="form-control form-control-sm rounded-4" type="text" placeholder="Add a condition (e.g. Asthma)" aria-label="Condition name">
+                            <button type="submit" class="btn btn-outline-primary rounded-4 btn-sm">
+                                <span class="material-symbols-outlined align-middle me-1">add</span>
+                                Add
+                            </button>
+                        </form>
+                        <div id="conditionsList" class="d-flex flex-wrap gap-2"></div>
+                    </section>
                 </div>
             </div>
-        </div>
 
-        <!-- Notification Preferences -->
-        <div class="bg-white rounded-xl shadow-sm border border-outline-variant p-6">
-            <h3 class="text-lg font-bold mb-6">Notification Preferences</h3>
-            <div class="space-y-6">
-                <div class="flex items-center justify-between">
+            <section class="card border-0 shadow-sm rounded-4 p-4">
+                <h3 class="h5 fw-bold mb-3">Notification Preferences</h3>
+                <div class="d-grid gap-3">
+                    <div class="d-flex justify-content-between align-items-center border rounded-4 p-3 bg-light">
+                        <div>
+                            <h4 class="h6 fw-bold mb-1">Email Reminders</h4>
+                            <p class="text-muted small mb-0">Receive appointment reminders in your email inbox.</p>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="email_notifications" value="1" role="switch" {{ old('email_notifications', auth()->user()->email_notifications ?? true) ? 'checked' : '' }}>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center border rounded-4 p-3 bg-light">
+                        <div>
+                            <h4 class="h6 fw-bold mb-1">SMS Alerts</h4>
+                            <p class="text-muted small mb-0">Send reminders to {{ auth()->user()->phone ?: 'your phone number' }}.</p>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="sms_notifications" value="1" role="switch" {{ old('sms_notifications', auth()->user()->sms_notifications ?? true) ? 'checked' : '' }}>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+
+            <section class="card border-0 shadow-sm rounded-4 p-4 bg-light border-danger-subtle">
+                <div class="d-flex justify-content-between align-items-center gap-3">
                     <div>
-                        <h4 class="font-bold text-sm">Appointment Reminders</h4>
-                        <p class="text-xs text-on-surface-variant">Get notified 24h before your scheduled visit</p>
+                        <h3 class="h6 fw-bold text-danger mb-1">Deactivate Account</h3>
+                        <p class="text-muted small mb-0">Temporarily disable your profile and data.</p>
                     </div>
-                    <div class="relative inline-flex items-center cursor-pointer">
-                        <div class="w-11 h-6 bg-primary-container rounded-full"></div>
-                        <div class="absolute left-6 top-1 w-4 h-4 bg-white rounded-full"></div>
-                    </div>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger rounded-4">
+                            <span class="material-symbols-outlined align-middle me-1">logout</span>
+                            Logout
+                        </button>
+                    </form>
                 </div>
-                <div class="flex items-center justify-between border-t border-surface pt-6">
-                    <div>
-                        <h4 class="font-bold text-sm">Email Marketing</h4>
-                        <p class="text-xs text-on-surface-variant">Receive newsletters and health tips</p>
-                    </div>
-                    <div class="relative inline-flex items-center cursor-pointer">
-                        <div class="w-11 h-6 bg-outline-variant rounded-full"></div>
-                        <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow-sm"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Danger Zone -->
-        <div class="p-6 bg-error-container/10 rounded-xl border border-error/20 flex items-center justify-between">
-            <div>
-                <h4 class="text-error font-bold text-sm">Deactivate Account</h4>
-                <p class="text-xs text-on-surface-variant">Temporarily disable your profile and data</p>
-            </div>
-                   <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="flex items-center gap-2 bg-red-50 text-red-600 px-4 py-2 rounded-lg hover:bg-red-100 transition font-medium">
-                <span class="material-symbols-outlined">logout</span>
-                Logout
-            </button>
-        </form>
+            </section>
         </div>
     </div>
 </div>
+@endsection
 
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const editProfileBtn = document.getElementById('editProfileBtn');
+        const profileSummaryBadges = document.getElementById('profileSummaryBadges');
+        const profileForm = document.getElementById('profileForm');
+
+        function focusProfileForm() {
+            profileForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const firstField = profileForm.querySelector('input[name="name"]');
+            if (firstField) {
+                setTimeout(function () {
+                    firstField.focus();
+                    firstField.select();
+                }, 300);
+            }
+        }
+
+        if (editProfileBtn && profileForm) {
+            editProfileBtn.addEventListener('click', focusProfileForm);
+        }
+
+        if (profileSummaryBadges && profileForm) {
+            profileSummaryBadges.addEventListener('click', focusProfileForm);
+            profileSummaryBadges.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    focusProfileForm();
+                }
+            });
+        }
+
+        function createChip(value, variant) {
+            const chip = document.createElement('span');
+            chip.className = variant === 'danger'
+                ? 'badge rounded-pill bg-danger-subtle text-danger border border-danger-subtle d-inline-flex align-items-center gap-1 px-2 py-2'
+                : 'badge rounded-pill bg-primary-subtle text-primary border border-primary-subtle d-inline-flex align-items-center gap-1 px-2 py-2';
+
+            chip.innerHTML = value + ' <button type="button" class="btn-close btn-close-sm" aria-label="Remove"></button>';
+            chip.querySelector('button').addEventListener('click', function () {
+                chip.remove();
+            });
+
+            return chip;
+        }
+
+        function initTagForm(formId, inputId, listId, variant) {
+            const form = document.getElementById(formId);
+            const input = document.getElementById(inputId);
+            const list = document.getElementById(listId);
+
+            if (!form || !input || !list) {
+                return;
+            }
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const value = input.value.trim();
+
+                if (!value) {
+                    input.focus();
+                    return;
+                }
+
+                list.appendChild(createChip(value, variant));
+                input.value = '';
+                input.focus();
+            });
+        }
+
+        initTagForm('allergyForm', 'allergyInput', 'allergiesList', 'danger');
+        initTagForm('conditionForm', 'conditionInput', 'conditionsList', 'primary');
+    });
+</script>
 @endsection

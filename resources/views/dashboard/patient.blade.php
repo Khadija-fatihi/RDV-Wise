@@ -1,106 +1,124 @@
 @extends('layouts.app')
 
-@section('title', 'Patient Dashboard - RDV Wise')
+@section('title', 'Patient Dashboard - Smarte Santé')
 
 @section('content')
 
-<div class="space-y-8">
+<div class="container-fluid py-3">
 
-    <!-- Welcome -->
-    <div>
-        <h1 class="text-2xl font-bold">Welcome back 👋 {{ auth()->user()->name }}</h1>
-        <p class="text-gray-500">Manage your health and appointments easily</p>
-    </div>
-
-    <!-- Stats with Icons -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="bg-white p-5 rounded-xl shadow border-l-4 border-blue-600 hover:shadow-md transition">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-500 text-sm font-semibold uppercase tracking-wide">Total Appointments</p>
-                    <h2 class="text-3xl font-bold text-blue-600 mt-2">{{ $totalAppointments ?? 0 }}</h2>
-                </div>
-                <span class="material-symbols-outlined text-5xl text-blue-100">calendar_month</span>
-            </div>
-        </div>
-        <div class="bg-white p-5 rounded-xl shadow border-l-4 border-green-600 hover:shadow-md transition">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-500 text-sm font-semibold uppercase tracking-wide">Upcoming</p>
-                    <h2 class="text-3xl font-bold text-green-600 mt-2">{{ $upcomingAppointments ?? 0 }}</h2>
-                </div>
-                <span class="material-symbols-outlined text-5xl text-green-100">event_available</span>
-            </div>
-        </div>
-        <div class="bg-white p-5 rounded-xl shadow border-l-4 border-emerald-600 hover:shadow-md transition">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-gray-500 text-sm font-semibold uppercase tracking-wide">Completed</p>
-                    <h2 class="text-3xl font-bold text-emerald-600 mt-2">{{ $completedAppointments ?? 0 }}</h2>
-                </div>
-                <span class="material-symbols-outlined text-5xl text-emerald-100">check_circle</span>
-            </div>
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden mb-4 bg-primary text-white">
+        <div class="card-body p-4 p-md-5">
+            <p class="text-uppercase small fw-semibold mb-2 text-white-50">Patient overview</p>
+            <h1 class="display-6 fw-bold mb-2">Welcome back 👋 {{ auth()->user()->name }}</h1>
+            <p class="mb-0 text-white-50">Manage your appointments, visits, and care updates in one place.</p>
         </div>
     </div>
 
-    <!-- Today's Appointments -->
-    <div>
-        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
-            <span class="material-symbols-outlined text-blue-600">today</span>
-            Today's Appointments
-        </h2>
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100 border-start border-primary border-5">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <div>
+                            <p class="text-muted text-uppercase small fw-semibold mb-2">Total Appointments</p>
+                            <h2 class="fw-bold text-primary mb-0">{{ $totalAppointments ?? 0 }}</h2>
+                        </div>
+                        <span class="material-symbols-outlined fs-1 text-primary-emphasis">calendar_month</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100 border-start border-success border-5">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <div>
+                            <p class="text-muted text-uppercase small fw-semibold mb-2">Upcoming</p>
+                            <h2 class="fw-bold text-success mb-0">{{ $upcomingAppointments ?? 0 }}</h2>
+                        </div>
+                        <span class="material-symbols-outlined fs-1 text-success-emphasis">event_available</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 h-100 border-start border-info border-5">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start gap-3">
+                        <div>
+                            <p class="text-muted text-uppercase small fw-semibold mb-2">Completed</p>
+                            <h2 class="fw-bold text-info mb-0">{{ $completedAppointments ?? 0 }}</h2>
+                        </div>
+                        <span class="material-symbols-outlined fs-1 text-info-emphasis">check_circle</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-4 p-md-5">
+            <h2 class="h4 fw-bold mb-4 d-flex align-items-center gap-2 text-primary">
+                <span class="material-symbols-outlined">today</span>
+                Today's Appointments
+            </h2>
 
         @if(isset($todayAppointments) && $todayAppointments->count())
-            <div class="space-y-4">
+            <div class="d-grid gap-3">
                 @foreach($todayAppointments as $appointment)
-                    <div class="bg-white p-5 rounded-xl shadow flex justify-between items-center hover:shadow-md transition border-l-4 border-blue-400">
-                        <div class="flex items-center gap-4">
-                            <span class="material-symbols-outlined text-blue-600 text-2xl">medical_services</span>
+                    <div class="d-flex justify-content-between align-items-center rounded-4 border border-primary-subtle bg-light p-3 p-md-4 shadow-sm">
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="material-symbols-outlined fs-2 text-primary">medical_services</span>
                             <div>
-                                <p class="font-bold">{{ $appointment->medecin->user->name ?? 'Doctor' }}</p>
-                                <p class="text-sm text-gray-500 flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-sm">schedule</span>
+                                <p class="fw-semibold mb-1">{{ $appointment->medecin->user->name ?? 'Doctor' }}</p>
+                                <p class="text-muted small mb-0 d-flex align-items-center gap-1">
+                                    <span class="material-symbols-outlined">schedule</span>
                                     {{ \Carbon\Carbon::parse($appointment->date_heure)->format('H:i') }}
                                 </p>
                             </div>
                         </div>
-                        <span class="px-3 py-1 text-xs bg-blue-100 text-blue-600 rounded-full font-semibold">
+                        <span class="badge bg-primary-subtle text-primary fw-semibold rounded-pill px-3 py-2">
                             {{ $appointment->type_seance ?? 'Consultation' }}
                         </span>
                     </div>
                 @endforeach
             </div>
         @else
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 text-center">
-                <span class="material-symbols-outlined text-5xl text-blue-300 block mb-2">event_busy</span>
-                <p class="text-gray-600">No appointments scheduled for today</p>
+            <div class="text-center rounded-4 border border-info-subtle bg-info-subtle p-4 p-md-5">
+                <span class="material-symbols-outlined fs-1 text-info-emphasis d-block mb-2">event_busy</span>
+                <p class="text-muted mb-0">No appointments scheduled for today</p>
             </div>
         @endif
+        </div>
     </div>
 
-    <!-- Quick Actions -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <a href="{{ route('book') }}" class="bg-blue-600 text-white px-6 py-4 rounded-lg shadow hover:bg-blue-700 transition flex items-center justify-center gap-2 font-bold">
-            <span class="material-symbols-outlined">add_circle</span>
-            Book Appointment
-        </a>
-        <a href="{{ route('visits') }}" class="bg-gray-100 text-gray-800 px-6 py-4 rounded-lg border border-gray-200 hover:bg-gray-200 transition flex items-center justify-center gap-2 font-bold">
-            <span class="material-symbols-outlined">assignment</span>
-            My Visits
-        </a>
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <a href="{{ route('book') }}" class="btn btn-primary btn-lg w-100 d-flex justify-content-center align-items-center gap-2 rounded-4 shadow-sm">
+                <span class="material-symbols-outlined">add_circle</span>
+                Book Appointment
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a href="{{ route('visits') }}" class="btn btn-outline-secondary btn-lg w-100 d-flex justify-content-center align-items-center gap-2 rounded-4 shadow-sm">
+                <span class="material-symbols-outlined">assignment</span>
+                My Visits
+            </a>
+        </div>
     </div>
 
-    <!-- Notifications Preview -->
-    <div class="bg-gradient-to-br from-purple-50 to-blue-50 p-6 rounded-xl border border-purple-200">
-        <h2 class="text-xl font-bold mb-3 flex items-center gap-2">
-            <span class="material-symbols-outlined text-purple-600">notifications_active</span>
-            Notifications
-        </h2>
-        <p class="text-gray-600 mb-3">You have <span class="font-bold text-purple-600">{{ $notificationsCount ?? 0 }}</span> new notifications</p>
-        <a href="{{ route('notifications') }}" class="text-blue-600 font-medium hover:underline flex items-center gap-1">
-            <span>View all</span>
-            <span class="material-symbols-outlined text-sm">arrow_forward</span>
-        </a>
+    <div class="card border-0 shadow-sm rounded-4 bg-gradient bg-info-subtle">
+        <div class="card-body p-4 p-md-5">
+            <h2 class="h4 fw-bold mb-3 d-flex align-items-center gap-2 text-primary">
+                <span class="material-symbols-outlined">notifications_active</span>
+                Notifications
+            </h2>
+            <p class="text-muted mb-3">You have <span class="fw-bold text-primary">{{ $notificationsCount ?? 0 }}</span> new notifications</p>
+            <a href="{{ route('notifications') }}" class="text-primary fw-semibold text-decoration-none d-inline-flex align-items-center gap-1">
+                <span>View all</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+        </div>
     </div>
 
 </div>

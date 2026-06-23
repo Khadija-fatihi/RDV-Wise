@@ -34,10 +34,10 @@ class AppointmentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'doctor_id'       => 'required|exists:medecins,id',
-            'appointment_date'=> 'required|date_format:Y-m-d H:i|after:now',
-            'reason_for_visit'=> 'nullable|string|max:500',
-            'appointment_type'=> 'required|in:consultation,hemodialyse,dialyse_peritoneale,suivi,urgence,in-person,online',
+            'doctor_id'        => 'required|exists:doctors,id',
+            'appointment_date' => 'required|date_format:Y-m-d\TH:i|after:now',
+            'reason_for_visit' => 'nullable|string|max:500',
+            'appointment_type' => 'required|in:consultation,hemodialyse,dialyse_peritoneale,suivi,urgence,in-person,online',
         ]);
 
         $patient = Auth::user()->patient;

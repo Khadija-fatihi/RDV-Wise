@@ -21,6 +21,8 @@ class User extends Authenticatable
         'password', 
         'role',
         'phone', 
+        'email_notifications',
+        'sms_notifications',
         'avatar', 
         'google_id', 
         'is_active'
@@ -40,6 +42,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'is_active' => 'boolean',
+        'email_notifications' => 'boolean',
+        'sms_notifications' => 'boolean',
     ];
 
     public function user()

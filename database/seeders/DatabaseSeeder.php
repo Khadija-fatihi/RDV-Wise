@@ -106,8 +106,8 @@ class DatabaseSeeder extends Seeder {
         }
 
         $this->command->info(' Données de démo insérées avec succès!');
-        $this->command->info(' Admin: admin@gmail.com / password');
-        $this->command->info(' Médecin: medecin1@gmail.com / password');
+        $this->command->info(' Admin:admin@gmail.com / password');
+        $this->command->info(' Médecin: medecin1@gmail.com/ password');
         $this->command->info(' Patient: patient1@gmail.com / password');
     }
 }   

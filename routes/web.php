@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Auth\PatientAuthController;
 use App\Http\Controllers\Auth\DoctorSignupController;
 use App\Http\Controllers\Auth\SignupController;
@@ -18,6 +21,22 @@ use App\Http\Controllers\Admin\AdminAppointmentController;
 |--------------------------------------------------------------------------
 */
 Route::get('/', function () {
+    if (Auth::check()) {
+        $user = auth()->user();
+
+        if ($user->isPatient()) {
+            return redirect()->route('patient.dashboard');
+        }
+
+        if ($user->isMedecin()) {
+            return redirect()->route('doctor.dashboard');
+        }
+
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.statistics');
+        }
+    }
+
     return view('welcome');
 })->name('home');
 
@@ -28,9 +47,9 @@ Route::get('/', function () {
 */
 Route::get('/login', function () {
     return view('auth.login');
-})->middleware('guest')->name('login');
+})->name('login');
 
-Route::post('/login', [PatientAuthController::class, 'login'])->middleware('guest')->name('login.post');
+Route::post('/login', [PatientAuthController::class, 'login'])->name('login.post');
 
 Route::get('/login/identify', function () {
     return view('auth.identify');
@@ -78,16 +97,66 @@ Route::middleware(['auth'])->group(function () {
     })->name('book');
 
     Route::get('/visits', function () {
-        return view('visits');
+        $patient = Auth::user()->patient;
+
+        $latestAppointment = $patient
+            ? \App\Models\Appointment::where('patient_id', $patient->id)
+                ->with(['doctor.user', 'consultation'])
+                ->latest('date_heure')
+                ->first()
+            : null;
+
+        return view('visits', compact('latestAppointment'));
     })->name('visits');
 
     Route::get('/profile', function () {
         return view('patient-profile');
     })->name('profile');
 
+    Route::post('/profile', function (Request $request) {
+        $user = auth()->user();
+
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'email_notifications' => ['nullable', 'boolean'],
+            'sms_notifications' => ['nullable', 'boolean'],
+            'cin' => ['nullable', 'string', 'max:50'],
+            'groupe_sanguin' => ['nullable', 'string', 'max:10'],
+            'organisme' => ['nullable', 'string', 'max:100'],
+        ]);
+
+        $user->update([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'] ?? $user->phone,
+            'email_notifications' => $request->boolean('email_notifications'),
+            'sms_notifications' => $request->boolean('sms_notifications'),
+        ]);
+
+        if ($user->patient) {
+            $user->patient->update([
+                'cin' => $data['cin'] ?? $user->patient->cin,
+                'groupe_sanguin' => $data['groupe_sanguin'] ?? $user->patient->groupe_sanguin,
+                'organisme' => $data['organisme'] ?? $user->patient->organisme,
+            ]);
+        }
+
+        return redirect()->route('profile')->with('status', 'Profile updated successfully.');
+    })->name('profile.update');
+
     Route::get('/notifications', [NotificationController::class, 'index'])
         ->middleware('auth')
         ->name('notifications');
+
+    Route::post('/record-access-request', [NotificationController::class, 'sendRecordAccessRequest'])
+        ->middleware('auth')
+        ->name('record-access.request');
+
+    Route::post('/record-access-response/{id}', [NotificationController::class, 'respondToRecordAccessRequest'])
+        ->middleware('auth')
+        ->name('record-access.response');
 
     Route::get('/dashboard/patient', [HomeController::class, 'patientDashboard'])->name('patient.dashboard');
 
