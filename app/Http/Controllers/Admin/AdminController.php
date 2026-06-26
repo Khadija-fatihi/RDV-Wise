@@ -104,20 +104,80 @@ class AdminController extends Controller
         ]);
     }
 
-    public function notifications()
+    public function notifications(Request $request)
     {
-        $admin = auth()->user();
+        $admin  = auth()->user();
+        $search = trim((string) $request->query('q', ''));
+        $filter = $request->query('filter', 'all');
 
-        $notifications      = $admin->notifications()->latest()->paginate(20);
+        $notificationsQuery = $admin->notifications()->latest();
+
+        if ($search !== '') {
+            $notificationsQuery->where(function ($q) use ($search) {
+                $q->where('data', 'like', "%{$search}%")
+                    ->orWhere('data->title', 'like', "%{$search}%")
+                    ->orWhere('data->message', 'like', "%{$search}%")
+                    ->orWhere('data->body', 'like', "%{$search}%");
+            });
+        }
+
+        if ($filter !== 'all') {
+            $notificationsQuery->where(function ($q) use ($filter) {
+                if ($filter === 'doctor') {
+                    $q->whereNotNull('data->doctor_name')
+                        ->orWhere('data->type', 'like', '%doctor%')
+                        ->orWhere('data->type', 'like', '%medical_records_request%')
+                        ->orWhere('data', 'like', '%Dr.%')
+                        ->orWhere('data', 'like', '%doctor%');
+                } elseif ($filter === 'patient') {
+                    $q->whereNotNull('data->patient_name')
+                        ->orWhere('data->type', 'like', '%patient%')
+                        ->orWhere('data->type', 'like', '%registration%')
+                        ->orWhere('data->type', 'like', '%appointment%')
+                        ->orWhere('data', 'like', '%booked%')
+                        ->orWhere('data', 'like', '%taken by%');
+                } elseif ($filter === 'system') {
+                    $q->where('data->type', 'like', '%system%')
+                        ->orWhere('data->type', 'like', '%alert%')
+                        ->orWhere('data->type', 'like', '%maintenance%')
+                        ->orWhere('data', 'like', '%system%');
+                }
+            });
+        }
+
+        $notifications      = $notificationsQuery->paginate(20)->withQueryString();
         $totalNotifications = $admin->notifications()->count();
         $unreadCount        = $admin->unreadNotifications()->count();
-        $criticalCount      = 0;
+        $criticalCount      = $admin->unreadNotifications->filter(function ($notification) {
+            $data = $notification->data;
+
+            if (! is_array($data)) {
+                return false;
+            }
+
+            if (! empty($data['priority']) && strcasecmp($data['priority'], 'critical') === 0) {
+                return true;
+            }
+
+            if (! empty($data['severity']) && strcasecmp($data['severity'], 'critical') === 0) {
+                return true;
+            }
+
+            if (! empty($data['type']) && in_array(strtolower($data['type']), ['critical', 'critical_alert', 'emergency', 'system_alert', 'medical_records_request'], true)) {
+                return true;
+            }
+
+            $body = strtolower((string) ($data['title'] ?? $data['message'] ?? $data['body'] ?? ''));
+            return str_contains($body, 'critical') || str_contains($body, 'urgent') || str_contains($body, 'emergency');
+        })->count();
 
         return view('notifications.Admin-notifications', compact(
             'notifications',
             'totalNotifications',
             'unreadCount',
-            'criticalCount'
+            'criticalCount',
+            'search',
+            'filter'
         ));
     }
 

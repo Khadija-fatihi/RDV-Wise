@@ -85,7 +85,7 @@
 <!-- SideNavBar (Shared Component) -->
 <aside class="hidden md:flex flex-col p-4 space-y-2 bg-white dark:bg-slate-900 h-[1024px] w-64 border-r border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none sticky top-0" data-stitch-vh="h-[1024px]===h-screen">
 <div class="px-2 py-4 mb-4">
-<span class="text-xl font-extrabold text-blue-600 dark:text-blue-400 font-manrope">RDV Wise</span>
+<span class="text-xl font-extrabold text-blue-600 dark:text-blue-400 font-manrope">Smart santé</span>
 </div>
 <div class="flex items-center space-x-3 px-3 py-4 mb-6 border-b border-slate-100 dark:border-slate-800">
 <img alt="Doctor Portrait" class="w-10 h-10 rounded-full object-cover ring-2 ring-blue-50" data-alt="professional portrait of a male doctor wearing a white lab coat warm smile modern clinic background soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRL2A8T9Z52MIZgfqq1pi4ycK_-7HEliy-JuVaEqA3WRawbPwkQThrp8R6mjAOfSL8ZrcqV0wKxFIKu8dNxorduTsa8qABRydt3fa_WgNQpeTe7vG8v6TPrXG78A9NX9-gmr24DnXa-f5TY2GAg_x5OXXEvqXpAEM5otdyuZmorO2Z9ioZwS7iCyLZooStAC4sIG_MlKJp7Y5eUHyTpm2lp0-yDbxW3bC1ApWWk3H5jcmVGX48gVrvN7MCq3vRzfp2YXO8kPF9T-s">

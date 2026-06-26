@@ -93,7 +93,7 @@
 <header class="bg-slate-50/90 dark:bg-slate-950/90 backdrop-blur-md docked full-width top-0 sticky border-b border-slate-200 dark:border-slate-800 shadow-sm z-50">
 <div class="flex justify-between items-center w-full px-6 py-3 max-w-7xl mx-auto">
 <div class="flex items-center gap-8">
-<span class="text-2xl font-black text-blue-600 dark:text-blue-500 tracking-tight">RDV Wise&nbsp; labo</span>
+<span class="text-2xl font-black text-blue-600 dark:text-blue-500 tracking-tight">Smart santé&nbsp; labo</span>
 <nav class="hidden md:flex gap-6">
 <a class="text-slate-600 dark:text-slate-400 hover:text-blue-500 font-['Manrope'] font-semibold" href="#">Home</a>
 <a class="text-slate-600 dark:text-slate-400 hover:text-blue-500 font-['Manrope'] font-semibold" href="#">Book</a>

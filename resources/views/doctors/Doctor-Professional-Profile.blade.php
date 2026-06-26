@@ -3,7 +3,7 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Dr. Sarah Jenkins - RDV Wise</title>
+<title>Dr. Sarah Jenkins - Smart santé</title>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <!-- Material Symbols -->
@@ -92,7 +92,7 @@
 <nav class="flex items-center justify-center h-20 w-full max-w-7xl mx-auto px-6">
 <div class="flex items-center justify-between w-full">
 <!-- Branding -->
-<div class="text-2xl font-black tracking-tight text-blue-600">RDV Wise</div>
+<div class="text-2xl font-black tracking-tight text-blue-600">Smart santé</div>
 <!-- Main Navigation Links -->
 <div class="flex items-center space-x-12">
 <a class="flex flex-col items-center gap-1 group" href="#">

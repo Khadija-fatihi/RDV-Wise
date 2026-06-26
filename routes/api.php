@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\ConsultationController;
 use App\Http\Controllers\Api\AiAnalysisController;
 use App\Http\Controllers\Api\StatisticsController;
+use App\Http\Controllers\Api\DoctorSearchController;
 
 /*
 |----------------------------------------------------------------------
@@ -23,6 +24,9 @@ Route::prefix('auth')->group(function () {
 Route::get('/medecins',              [MedecinController::class, 'index']);
 Route::get('/medecins/{medecin}',    [MedecinController::class, 'show']);
 Route::get('/medecins/{medecin}/slots', [AppointmentController::class, 'slots']);
+
+// Recherche de médecins par ville et spécialité
+Route::get('/doctors', [DoctorSearchController::class, 'index']);
 
 // Symptômes IA (public pour démo)
 Route::get('/ai/symptomes', [AiAnalysisController::class, 'symptomes']);

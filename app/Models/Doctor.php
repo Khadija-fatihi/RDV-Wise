@@ -19,22 +19,26 @@ class Doctor extends Model
     protected $table = 'doctors';
     
   protected $fillable = [
-    'user_id', 
-    'cin',        // ✅ add this
-    'verified',   // ✅ add this
-    'specialite', 
-    'inpe', 
-    'cabinet', 
-    'bio',
-    'phone',      // ✅ add this too
-    'consultation_duree', 
-    'tarif', 
-    'jours_travail',
-    'heure_debut', 
-    'heure_fin', 
-    'accepte_nouveaux'
-];
- 
+        'user_id',
+        'name',
+        'email',
+        'city',
+        'address',
+        'photo',
+        'cin',
+        'verified',
+        'specialite',
+        'inpe',
+        'cabinet',
+        'bio',
+        'phone',
+        'consultation_duree',
+        'tarif',
+        'jours_travail',
+        'heure_debut',
+        'heure_fin',
+        'accepte_nouveaux'
+    ];
     protected $casts = [
         'jours_travail'    => 'array',
         'accepte_nouveaux' => 'boolean',

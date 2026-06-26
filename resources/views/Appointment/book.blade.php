@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Book Appointment - RDV Wise')
+@section('title', 'Book Appointment - Smart santé')
 
 @section('content')
 

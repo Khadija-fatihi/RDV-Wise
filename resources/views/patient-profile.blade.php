@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Profile - RDV Wise')
+@section('title', 'Profile - Smart santé')
 
 @section('content')
 <div class="container py-4">
@@ -139,7 +139,59 @@
                             <input class="form-check-input" type="checkbox" name="sms_notifications" value="1" role="switch" {{ old('sms_notifications', auth()->user()->sms_notifications ?? true) ? 'checked' : '' }}>
                         </div>
                     </div>
-                    
+                </div>
+            </section>
+
+            <section class="card border-0 shadow-sm rounded-4 p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h3 class="h5 fw-bold mb-1">Medical Records</h3>
+                        <p class="text-muted mb-0">Upload your medical history so doctors can review previous reports and prescriptions.</p>
+                    </div>
+                </div>
+
+                @if (session('success'))
+                    <div class="alert alert-success rounded-4 mb-3">{{ session('success') }}</div>
+                @endif
+
+                <form action="{{ route('patient.records.upload') }}" method="POST" enctype="multipart/form-data" class="mb-4">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="records" class="form-label small text-uppercase fw-semibold text-muted">Add files</label>
+                        <input class="form-control rounded-4" type="file" id="records" name="records[]" multiple accept=".pdf,.jpg,.jpeg,.png">
+                        @error('records')
+                            <div class="text-danger small mt-2">{{ $message }}</div>
+                        @enderror
+                        @error('records.*')
+                            <div class="text-danger small mt-2">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <button type="submit" class="btn btn-primary rounded-4">Upload Records</button>
+                </form>
+
+                <div class="border-top border-secondary-subtle pt-3">
+                    <h4 class="h6 fw-semibold mb-3">Uploaded Files</h4>
+                    @if (!empty($patientRecords) && count($patientRecords))
+                        <ul class="list-group list-group-flush">
+                            @foreach ($patientRecords as $file)
+                                <li class="list-group-item px-0 py-2">
+                                    <div class="d-flex justify-content-between align-items-center gap-2">
+                                        <span>{{ $file['name'] }}</span>
+                                        <div class="d-flex gap-2">
+                                            <a href="{{ route('patient.record.download', ['filename' => $file['filename']]) }}" class="btn btn-outline-primary btn-sm rounded-4">Download</a>
+                                            <form action="{{ route('patient.record.delete', ['filename' => $file['filename']]) }}" method="POST" class="m-0">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-outline-danger btn-sm rounded-4">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p class="text-muted small mb-0">No medical records uploaded yet.</p>
+                    @endif
                 </div>
             </section>
 

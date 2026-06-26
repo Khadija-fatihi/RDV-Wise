@@ -182,7 +182,7 @@
 <span class="material-symbols-outlined text-8xl absolute -top-4 -left-4 opacity-10" data-icon="format_quote">format_quote</span>
 <div class="relative z-10">
 <p class="text-2xl font-medium leading-relaxed italic mb-8">
-                                "RDV Wise has completely transformed our clinic's workflow. The AI scheduling reduces no-shows by 40% and allows me to focus purely on patient care."
+                                "Smart santé has completely transformed our clinic's workflow. The AI scheduling reduces no-shows by 40% and allows me to focus purely on patient care."
                             </p>
 <div class="flex items-center gap-4">
 <img alt="Doctor portrait" class="w-16 h-16 rounded-full object-cover border-2 border-white/30" data-alt="Professional portrait of a male doctor in a white coat smiling with a blurred medical background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8W3NW7I5mZpeMCa6gzS4TEnqndVeZQWfDHSBvxB2qqyw-PulDAx-BhyL3-KPmyR30Jp_NgzuVsxWNgM_RkvJp8MCVTbovIsw2y4wjMYgwv512-NqSnmhQQGUHfucxJwgyDl3mGEFLupazwXp3QReWGRGaK1n6p8VsLx9m9acJ9ZSdVwaAQl59b-ubMCIVAvWPpbtF7qeoRUL_j2JwSmJ80lnPLBBUQb0czzggi6CZx2cY9_U3Rxx0x-cOejuLXFJ0kd_kjj5i7Sk"/>
@@ -197,13 +197,13 @@
 <span class="material-symbols-outlined text-8xl absolute -top-4 -left-4 text-slate-100" data-icon="format_quote">format_quote</span>
 <div class="relative z-10">
 <p class="text-2xl font-medium leading-relaxed italic mb-8">
-                                "I used to spend hours calling different offices. With RDV Wise, I booked my specialist appointment in two minutes. The medical records sync is a lifesaver."
+                                "I used to spend hours calling different offices. With Smart santé, I booked my specialist appointment in two minutes. The medical records sync is a lifesaver."
                             </p>
 <div class="flex items-center gap-4">
 <img alt="Patient portrait" class="w-16 h-16 rounded-full object-cover border-2 border-primary-fixed" data-alt="Friendly portrait of a woman in casual attire smiling confidently in a bright urban setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASTrVke1njpWfhJAPZkjAOc8gyOL_WYncP7Iha06f9EWDjaXczz8fYc4LpCNuUOvxvhV2xyIzjeBTiXncn1x-YNMXRYMl9UrL6uGkAsgEpALiDp4UvqrkfM3O1B6su9edXdCeaxbgITtnbB5ZduxRU0Z9h3LupBixYDjODrQScwo_nUsYrxcXeWfZDiDXrpyXjtUgDK4LMSgfaP5oV9pmhWPlyUz8-2-fJtmwl3lQ1CK9ZLvf-iGCJ1qDf9-4tS0ovjPKP2irB3JU"/>
 <div>
 <h4 class="font-bold text-lg">Sarah Jenkins</h4>
-<p class="text-on-surface-variant">RDV Wise Patient since 2023</p>
+<p class="text-on-surface-variant">Smart santé Patient since 2023</p>
 </div>
 </div>
 </div>
@@ -229,9 +229,9 @@
 <footer class="w-full border-t border-slate-200 bg-slate-50 rounded-none">
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 py-12 lg:px-12 max-w-7xl mx-auto">
 <div class="flex flex-col gap-4">
-<div class="text-lg font-bold text-slate-900">RDV Wise</div>
+<div class="text-lg font-bold text-slate-900">Smart santé</div>
 <p class="font-['Inter'] text-sm leading-relaxed text-slate-500 max-w-xs">
-                    © 2024 RDV Wise. Modern healthcare scheduling.
+                    © 2024 Smart santé. Modern healthcare scheduling.
                 </p>
 </div>
 <div class="grid grid-cols-2 gap-4">

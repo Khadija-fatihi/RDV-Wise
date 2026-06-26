@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Patient;
 use App\Models\Appointment;
 use App\Models\Doctor;
+use Database\Seeders\DoctorSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -104,6 +105,8 @@ class DatabaseSeeder extends Seeder {
                 'updated_at' => now()->subDays(rand(1, 90)),
             ]);
         }
+
+        $this->call(DoctorSeeder::class);
 
         $this->command->info(' Données de démo insérées avec succès!');
         $this->command->info(' Admin:admin@gmail.com / password');

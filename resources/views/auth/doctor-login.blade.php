@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>RDV Wise - Doctor Sign Up</title>
+    <title>Smart santé - Doctor Sign Up</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -57,7 +57,7 @@
                 <span class="material-symbols-outlined text-white text-4xl">medical_services</span>
             </div>
         </div>
-        <h1 class="font-headline text-4xl font-extrabold tracking-tight text-primary">RDV Wise</h1>
+        <h1 class="font-headline text-4xl font-extrabold tracking-tight text-primary">Smart santé</h1>
         <div class="space-y-1">
             <h2 class="font-headline text-2xl font-bold">Doctor Access</h2>
             <p class="text-on-surface-variant font-body">Doctor accounts are created and verified by the admin team. Please contact the admin for an invitation.</p>

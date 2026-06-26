@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Notifications - RDV Wise')
+@section('title', 'Notifications - Smart santé')
 
 @section('content')
 
@@ -51,6 +51,25 @@
 
             <!-- Notifications List -->
             <div class="grid gap-4">
+                @if(isset($notifications) && $notifications->isNotEmpty())
+                    @foreach($notifications as $notification)
+                        @php $data = $notification->data ?? []; @endphp
+                        <div class="group bg-surface-container-lowest p-5 rounded-2xl border-l-4 border-l-blue-500 shadow-sm hover:shadow-md transition-all flex gap-5 items-start">
+                            <div class="w-12 h-12 bg-blue-100 flex items-center justify-center rounded-xl shrink-0">
+                                <span class="material-symbols-outlined text-blue-700">campaign</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="font-bold text-on-surface">{{ $data['title'] ?? 'System Notification' }}</h3>
+                                    <span class="text-xs font-medium text-outline">{{ $notification->created_at?->diffForHumans() }}</span>
+                                </div>
+                                <p class="text-on-surface-variant leading-relaxed">
+                                    {{ $data['message'] ?? 'You have a new notification from the system.' }}
+                                </p>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
                 <!-- Notification 1: Appointment Request -->
                 <div class="group bg-surface-container-lowest p-5 rounded-2xl border-l-4 border-l-primary shadow-sm hover:shadow-md transition-all flex gap-5 items-start">
                     <div class="w-12 h-12 bg-primary-fixed flex items-center justify-center rounded-xl shrink-0">

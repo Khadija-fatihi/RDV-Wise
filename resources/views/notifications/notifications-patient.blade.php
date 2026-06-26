@@ -87,7 +87,29 @@
                 </article>
             @endforeach
 
-            @if ($recordRequests->isEmpty())
+            @php
+                $generalNotifications = collect($notifications ?? [])->reject(fn ($notification) => ($notification->data['type'] ?? null) === 'medical_records_request');
+            @endphp
+
+            @foreach ($generalNotifications as $notification)
+                @php
+                    $data = $notification->data ?? [];
+                @endphp
+                <article class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="rounded-4 bg-primary bg-opacity-10 text-primary p-3"><span class="material-symbols-outlined">campaign</span></div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-start gap-3 mb-2">
+                                <h3 class="h5 fw-bold mb-0">{{ $data['title'] ?? 'Notification' }}</h3>
+                                <span class="badge bg-light text-muted">{{ $notification->created_at?->diffForHumans() ?? 'Recently' }}</span>
+                            </div>
+                            <p class="text-muted mb-0">{{ $data['message'] ?? 'You have a new notification.' }}</p>
+                        </div>
+                    </div>
+                </article>
+            @endforeach
+
+            @if ($recordRequests->isEmpty() && $generalNotifications->isEmpty())
                 <article class="card border-0 shadow-sm rounded-4 p-4 bg-light">
                     <p class="text-muted mb-0">No record access requests are pending right now.</p>
                 </article>

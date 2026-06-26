@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'My Visits - RDV Wise')
+@section('title', 'My Visits - Smart santé')
 
 @section('content')
 <div class="container py-4">
@@ -240,7 +240,7 @@
                 if (navigator.share) {
                     navigator.share({
                         title: 'Lab Results & Reports',
-                        text: 'Here are my recent lab results from RDV Wise.',
+                        text: 'Here are my recent lab results from Smart santé.',
                         url: window.location.href
                     }).catch(function () {});
                 } else {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Patient Sign Up | RDV Wise</title>
+<title>Patient Sign Up | Smart santé</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@700;800&display=swap" rel="stylesheet"/>
@@ -81,7 +81,7 @@
             <div class="relative z-10">
                 <div class="flex items-center gap-2 mb-8">
                     <span class="material-symbols-outlined text-on-primary text-4xl">verified_user</span>
-                    <span class="text-on-primary text-2xl font-extrabold tracking-tight font-headline">RDV Wise</span>
+                    <span class="text-on-primary text-2xl font-extrabold tracking-tight font-headline">Smart santé</span>
                 </div>
                 <h1 class="text-4xl font-extrabold text-on-primary leading-tight mb-6">
                     Secure Access to Your Healthcare Identity.
@@ -249,7 +249,7 @@
     </div>
 </main>
 <footer class="p-6 text-center text-on-surface-variant text-sm">
-    <p>© 2024 RDV Wise. Licensed Healthcare Software Provider.</p>
+    <p>© 2024 Smart santé. Licensed Healthcare Software Provider.</p>
 </footer>
 </body>
 </html>

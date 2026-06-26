@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Doctor Dashboard - RDV Wise')
+@section('title', 'Doctor Dashboard - Smart santé')
 
 @section('content')
         <h1 class="text-2xl font-bold">Welcome , Dr. {{ auth()->user()->name ?? 'Doctor' }} 👨‍⚕️</h1>

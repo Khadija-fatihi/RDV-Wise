@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function patientDashboard()
     {
-        $user    = auth()->user();
-        $patient = $user->patient;
+        $user = auth()->user();
 
+        if (!$user->isPatient() || !$user->patient) {
+            return redirect()->route('dashboard');
+        }
+
+        $patient = $user->patient;
         $appointments = $patient->appointments();
+        $specialties = Doctor::where('verified', true)->distinct()->pluck('specialite');
+        $cities      = Doctor::where('verified', true)->distinct()->pluck('city');
 
         return view('dashboard.patient', [
             'totalAppointments'     => $appointments->count(),
@@ -19,6 +26,8 @@ class HomeController extends Controller
             'completedAppointments' => $appointments->where('statut', 'completed')->count(),
             'todayAppointments'     => $appointments->whereDate('date_heure', today())->get(),
             'notificationsCount'    => 2,
+            'specialties'           => $specialties,
+            'cities'                => $cities,
         ]);
     }
 

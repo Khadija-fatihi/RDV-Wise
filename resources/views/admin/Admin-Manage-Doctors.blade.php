@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Clinical Clarity - Manage Doctors</title>
+<title>Smart santé - Manage Doctors</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -42,7 +42,7 @@
 <!-- Sidebar -->
 <aside class="h-screen w-64 fixed left-0 top-0 bg-slate-50 border-r border-slate-200 z-50 flex flex-col py-4">
     <div class="px-6 mb-8">
-        <h1 class="font-extrabold text-blue-600 text-xl tracking-tight" style="font-family:'Manrope'">Clinical Clarity</h1>
+        <h1 class="font-extrabold text-blue-600 text-xl tracking-tight" style="font-family:'Manrope'">Smart santé</h1>
         <p class="text-xs text-slate-500 mt-1 uppercase tracking-wider font-semibold">Admin Dashboard</p>
     </div>
     <nav class="flex-1 px-3 space-y-1">
@@ -63,9 +63,7 @@
         <a href="{{ route('admin.notifications') }}" class="flex items-center px-3 py-2.5 text-slate-600 hover:text-blue-600 hover:bg-slate-100 transition-all">
             <span class="material-symbols-outlined mr-3">notifications</span> Notifications
         </a>
-        <a href="{{ route('admin.support') }}" class="flex items-center px-3 py-2.5 text-slate-600 hover:text-blue-600 hover:bg-slate-100 transition-all">
-            <span class="material-symbols-outlined mr-3">help</span> Support
-        </a>
+       
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="w-full flex items-center px-3 py-2.5 text-slate-600 hover:text-blue-600 hover:bg-slate-100 transition-all">
@@ -161,21 +159,22 @@
                         <tr class="bg-slate-50 border-b border-slate-200">
                             <th class="px-6 py-4 text-xs font-extrabold text-slate-500 uppercase tracking-wider">Name</th>
                             <th class="px-6 py-4 text-xs font-extrabold text-slate-500 uppercase tracking-wider">Specialty</th>
+                            <th class="px-6 py-4 text-xs font-extrabold text-slate-500 uppercase tracking-wider">City</th>
                             <th class="px-6 py-4 text-xs font-extrabold text-slate-500 uppercase tracking-wider">Status</th>
                             <th class="px-6 py-4 text-xs font-extrabold text-slate-500 uppercase tracking-wider">Contact</th>
                             <th class="px-6 py-4 text-xs font-extrabold text-slate-500 uppercase tracking-wider text-right">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-100">
+                    <tbody class="divide-y divide-slate-200">
                         @forelse($doctors ?? [] as $doctor)
-                        <tr class="hover:bg-slate-50 transition-colors">
+                        <tr class="hover:bg-slate-65 transition-colors">
                             <td class="px-6 py-4">
-                                <div class="flex items-center gap-3">
+                                <div class="flex items-center gap-8">
                                     <div class="w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm">
                                         {{ strtoupper(substr($doctor->user->name ?? 'D', 0, 2)) }}
                                     </div>
                                     <div>
-                                        <p class="font-bold text-slate-900">Dr. {{ $doctor->user->name ?? 'Unknown' }}</p>
+                                        <p class="font-bold text-slate-900"> {{ $doctor->user->name ?? 'Unknown' }}</p>
                                         <p class="text-xs text-slate-500">ID: DOC-{{ $doctor->id }}</p>
                                     </div>
                                 </div>
@@ -184,6 +183,9 @@
                                 <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold rounded-full border border-blue-100">
                                     {{ $doctor->specialite ?? 'N/A' }}
                                 </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-slate-700">
+                                {{ $doctor->city ?? 'Unknown' }}
                             </td>
                             <td class="px-6 py-4">
                                 @if($doctor->verified ?? false)
@@ -224,7 +226,16 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-12 text-center text-slate-400">No doctors found.</td>
+                            <td colspan="6" class="px-6 py-12 text-center">
+                                <div class="max-w-2xl mx-auto">
+                                    <p class="text-lg font-semibold text-slate-900 mb-2">No doctors match your current filters.</p>
+                                    <p class="text-sm text-slate-500 mb-4">There are currently no registered doctors for this specialty or search term. Add a new doctor to populate this specialty for patients.</p>
+                                    <a href="{{ route('admin.doctors.create') }}" class="inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-all">
+                                        <span class="material-symbols-outlined mr-2">person_add</span>
+                                        Add a Doctor
+                                    </a>
+                                </div>
+                            </td>
                         </tr>
                         @endforelse
                     </tbody>

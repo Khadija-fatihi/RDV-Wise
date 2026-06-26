@@ -110,7 +110,18 @@ Route::middleware(['auth'])->group(function () {
     })->name('visits');
 
     Route::get('/profile', function () {
-        return view('patient-profile');
+        $user = auth()->user();
+        $patientRecords = [];
+
+        if ($user) {
+            $patientRecords = collect(\Illuminate\Support\Facades\Storage::files("patient-records/{$user->id}"))
+                ->map(fn ($path) => [
+                    'name' => basename($path),
+                    'filename' => basename($path),
+                ])->values()->all();
+        }
+
+        return view('patient-profile', compact('patientRecords'));
     })->name('profile');
 
     Route::post('/profile', function (Request $request) {
@@ -149,6 +160,20 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/notifications', [NotificationController::class, 'index'])
         ->middleware('auth')
         ->name('notifications');
+
+    Route::post('/notifications/records', [NotificationController::class, 'uploadPatientRecords'])
+        ->middleware('auth')
+        ->name('patient.records.upload');
+
+    Route::get('/notifications/records/{filename}', [NotificationController::class, 'downloadPatientRecord'])
+        ->middleware('auth')
+        ->name('patient.record.download')
+        ->where('filename', '.*');
+
+    Route::delete('/notifications/records/{filename}', [NotificationController::class, 'deletePatientRecord'])
+        ->middleware('auth')
+        ->name('patient.record.delete')
+        ->where('filename', '.*');
 
     Route::post('/record-access-request', [NotificationController::class, 'sendRecordAccessRequest'])
         ->middleware('auth')
@@ -231,6 +256,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     // Admin Notifications
     Route::get('/notifications', [AdminController::class, 'notifications'])->name('notifications');
+    Route::patch('/notifications/{id}/read', [AdminController::class, 'markRead'])->name('notifications.read');
+    Route::delete('/notifications/{id}', [AdminController::class, 'deleteNotification'])->name('notifications.delete');
+    Route::post('/notifications/mark-all-read', [AdminController::class, 'markAllRead'])->name('notifications.markAllRead');
 
     // --- Doctors ---
     Route::get('/doctors', [AdminDoctorController::class, 'index'])->name('doctors');

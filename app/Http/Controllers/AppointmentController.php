@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\SignupController;
 
 use App\Models\Appointment;
 use App\Models\Doctor;
+use App\Notifications\AppointmentNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,9 +14,10 @@ class AppointmentController extends Controller
 {
     public function index()
     {
+        /** @var \App\Models\User|null $user */
         $user = Auth::user();
 
-        if ($user->isPatient()) {
+        if ($user?->isPatient()) {
             $appointments = $user->patient->appointments()->with('doctor.user')->paginate(15);
         } elseif ($user->isMedecin()) {
             $appointments = $user->doctor->appointments()->with('patient.user')->paginate(15);
@@ -52,6 +54,14 @@ class AppointmentController extends Controller
             'type_seance' => in_array($validated['appointment_type'], ['in-person', 'online']) ? 'consultation' : $validated['appointment_type'],
         ]);
 
+        if ($patient?->user) {
+            $patient->user->notify(new AppointmentNotification($appointment, 'patient', 'scheduled'));
+        }
+
+        if ($doctor?->user) {
+            $doctor->user->notify(new AppointmentNotification($appointment, 'doctor', 'scheduled'));
+        }
+
         return redirect()->route('appointments.index')->with('success', 'Appointment booked successfully!');
     }
 
@@ -67,6 +77,17 @@ class AppointmentController extends Controller
         $appointment = Appointment::findOrFail($id);
         $appointment->update(['statut' => 'confirmed']);
 
+        $patientUser = $appointment->patient?->user;
+        $doctorUser = $appointment->doctor?->user;
+
+        if ($patientUser) {
+            $patientUser->notify(new AppointmentNotification($appointment, 'patient', 'confirmed'));
+        }
+
+        if ($doctorUser) {
+            $doctorUser->notify(new AppointmentNotification($appointment, 'doctor', 'confirmed'));
+        }
+
         return back()->with('success', 'Appointment confirmed!');
     }
 
@@ -74,6 +95,17 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::findOrFail($id);
         $appointment->update(['statut' => 'cancelled']);
+
+        $patientUser = $appointment->patient?->user;
+        $doctorUser = $appointment->doctor?->user;
+
+        if ($patientUser) {
+            $patientUser->notify(new AppointmentNotification($appointment, 'patient', 'cancelled'));
+        }
+
+        if ($doctorUser) {
+            $doctorUser->notify(new AppointmentNotification($appointment, 'doctor', 'cancelled'));
+        }
 
         return back()->with('success', 'Appointment cancelled!');
     }

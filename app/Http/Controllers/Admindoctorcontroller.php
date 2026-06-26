@@ -64,6 +64,7 @@ class AdminDoctorController extends Controller
             'email'      => 'required|email|unique:users,email',
             'password'   => 'required|min:8|confirmed',
             'specialite' => 'required|string|max:255',
+            'city'       => 'required|string|max:255',
             'phone'      => 'nullable|string|max:20',
         ]);
 
@@ -78,6 +79,7 @@ class AdminDoctorController extends Controller
         Doctor::create([
             'user_id'    => $user->id,
             'specialite' => $request->specialite,
+            'city'       => $request->city,
             'verified'   => false,
         ]);
 
@@ -105,6 +107,7 @@ class AdminDoctorController extends Controller
             'name'       => 'required|string|max:255',
             'email'      => 'required|email|unique:users,email,' . $doctor->user->id,
             'specialite' => 'required|string|max:255',
+            'city'       => 'required|string|max:255',
             'phone'      => 'nullable|string|max:20',
         ]);
 
@@ -116,6 +119,7 @@ class AdminDoctorController extends Controller
 
         $doctor->update([
             'specialite' => $request->specialite,
+            'city'       => $request->city,
         ]);
 
         return redirect()->route('admin.doctors')

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Manage Patients - Clinical Clarity</title>
+<title>Manage Patients - Smart santé</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -24,7 +24,7 @@
 <!-- Sidebar -->
 <aside class="h-screen w-64 fixed left-0 top-0 bg-slate-50 border-r border-slate-200 flex flex-col py-4 z-50">
     <div class="px-6 mb-8">
-        <h1 class="font-extrabold text-blue-600 text-xl tracking-tight" style="font-family:'Manrope'">Clinical Clarity</h1>
+        <h1 class="font-extrabold text-blue-600 text-xl tracking-tight" style="font-family:'Manrope'">Smart santé</h1>
         <p class="text-xs text-slate-500 uppercase tracking-widest font-semibold mt-1">Medical Admin Portal</p>
     </div>
     <nav class="flex-1 flex flex-col space-y-1">

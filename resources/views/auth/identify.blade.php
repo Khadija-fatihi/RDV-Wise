@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>User Identify - RDV Wise</title>
+<title>User Identify - Smart santé</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -103,7 +103,7 @@
 <div class="inline-flex items-center justify-center w-20 h-20 mb-6 rounded-2xl bg-primary-container/10">
 <span class="material-symbols-outlined text-primary text-4xl">health_and_safety</span>
 </div>
-<h2 class="font-headline font-extrabold text-3xl md:text-4xl text-on-surface mb-3 tracking-tight">Welcome to RDV Wise</h2>
+<h2 class="font-headline font-extrabold text-3xl md:text-4xl text-on-surface mb-3 tracking-tight">Welcome to Smart santé</h2>
 <p class="font-body text-on-surface-variant text-lg">Please select your profile type to continue</p>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">

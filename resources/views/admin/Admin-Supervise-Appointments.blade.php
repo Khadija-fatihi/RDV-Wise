@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Supervise Appointments - Clinical Clarity</title>
+<title>Supervise Appointments -Smart santé</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -24,7 +24,7 @@
 <!-- Sidebar -->
 <aside class="h-screen w-64 fixed left-0 top-0 bg-slate-50 border-r border-slate-200 flex flex-col py-4 z-50">
     <div class="px-6 mb-8">
-        <h1 class="font-extrabold text-blue-600 text-xl" style="font-family:'Manrope'">Clinical Clarity</h1>
+        <h1 class="font-extrabold text-blue-600 text-xl" style="font-family:'Manrope'">Smart santé</h1>
         <p class="text-xs text-slate-500 font-medium mt-1">Admin Dashboard</p>
     </div>
     <nav class="flex-1 px-3 space-y-1">
@@ -42,12 +42,7 @@
         </a>
     </nav>
     <div class="px-4 mt-auto space-y-1 border-t border-slate-200 pt-4">
-        <a href="{{ route('admin.notifications') }}" class="flex items-center px-3 py-2 text-slate-600 hover:bg-slate-100 transition-all rounded-lg text-sm">
-            <span class="material-symbols-outlined mr-3">notifications</span> Notifications
-        </a>
-        <a href="{{ route('admin.support') }}" class="flex items-center px-3 py-2 text-slate-600 hover:bg-slate-100 transition-all rounded-lg text-sm">
-            <span class="material-symbols-outlined mr-3">help</span> Support
-        </a>
+      
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="w-full flex items-center px-3 py-2 text-slate-600 hover:bg-slate-100 transition-all rounded-lg text-sm">
@@ -93,7 +88,7 @@
                 <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Supervise Appointments</h2>
                 <p class="text-slate-500 mt-1">Manage and audit all clinical consultations.</p>
             </div>
-            <div class="flex gap-4">
+            <div class="flex gap-4 items-end">
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 min-w-[160px]">
                     <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
                         <span class="material-symbols-outlined">calendar_month</span>
@@ -238,10 +233,5 @@
     </div>
 </main>
 
-<!-- FAB Emergency -->
-<button class="fixed bottom-8 right-8 w-14 h-14 bg-red-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50 group">
-    <span class="material-symbols-outlined">emergency_home</span>
-    <span class="absolute right-full mr-4 bg-slate-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">Emergency Broadcast</span>
-</button>
 </body>
 </html>

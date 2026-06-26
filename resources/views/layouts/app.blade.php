@@ -8,11 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     @if (file_exists(public_path('build/manifest.json')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @else
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        <script src="{{ asset('js/app.js') }}" defer></script>
     @endif
     <style>
       .material-symbols-outlined {
@@ -21,6 +20,7 @@
       body { font-family: 'Inter', sans-serif; }
       h1, h2, h3 { font-family: 'Manrope', sans-serif; }
     </style>
+    @yield('head')
 </head>
 <body class="bg-light text-dark min-vh-100 pb-20 md:pb-0">
 <header class="sticky top-0 z-50 navbar navbar-light bg-white border-bottom shadow-sm px-3 px-md-4">
@@ -35,6 +35,10 @@
                 @else
                     <a class="nav-link {{ request()->routeIs('home') ? 'text-primary fw-semibold' : 'text-secondary' }}" href="{{ route('home') }}">Home</a>
                     <a class="nav-link {{ request()->routeIs('book') ? 'text-primary fw-semibold' : 'text-secondary' }}" href="{{ route('book') }}">Book</a>
+                    @if(auth()->user()->isPatient())
+                        <a class="nav-link {{ request()->routeIs('appointments.index') ? 'text-primary fw-semibold' : 'text-secondary' }}" href="{{ route('appointments.index') }}">Appointments</a>
+                        <a class="nav-link {{ request()->routeIs('ai.checker') ? 'text-primary fw-semibold' : 'text-secondary' }}" href="{{ route('ai.checker') }}">AI Symptom</a>
+                    @endif
                     <a class="nav-link {{ request()->routeIs('visits') ? 'text-primary fw-semibold' : 'text-secondary' }}" href="{{ route('visits') }}">My Visits</a>
                     <a class="nav-link {{ request()->routeIs('profile') ? 'text-primary fw-semibold' : 'text-secondary' }}" href="{{ route('profile') }}">Profile</a>
                 @endif
